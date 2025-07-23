@@ -1,0 +1,47 @@
+@font-face {
+    font-family: "Libertinus";
+    src: url("https://raw.githubusercontent.com/yiran-frank-mao/image_repo/master/Fonts/Libertinus Serif/LibertinusSerif-Regular.otf")
+        format("opentype");
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Libertinus";
+    src: url("https://raw.githubusercontent.com/yiran-frank-mao/image_repo/master/Fonts/Libertinus Serif/LibertinusSerif-Italic.otf")
+        format("opentype");
+    font-style: italic;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Libertinus";
+    src: url("https://raw.githubusercontent.com/yiran-frank-mao/image_repo/master/Fonts/Libertinus Serif/LibertinusSerif-Semibold.otf")
+        format("opentype");
+    font-style: normal;
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "Libertinus";
+    src: url("https://raw.githubusercontent.com/yiran-frank-mao/image_repo/master/Fonts/Libertinus Serif/LibertinusSerif-SemiboldItalic.otf")
+        format("opentype");
+    font-style: italic;
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "Libertinus";
+    src: url("https://raw.githubusercontent.com/yiran-frank-mao/image_repo/master/Fonts/Libertinus Serif/LibertinusSerif-Bold.otf")
+        format("opentype");
+    font-style: normal;
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "Libertinus";
+    src: url("https://raw.githubusercontent.com/yiran-frank-mao/image_repo/master/Fonts/Libertinus Serif/LibertinusSerif-BoldItalic.otf")
+        format("opentype");
+    font-style: italic;
+    font-weight: bold;
+}
