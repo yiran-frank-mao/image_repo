@@ -1,0 +1,11 @@
+% https://q.uiver.app/#q=WzAsMixbMCwwLCJWIl0sWzIsMCwiViBcXG90aW1lcyBXIFxcb3RpbWVzIFYiXSxbMCwxLCIxX1YgXFxvdGltZXMgXFxnYW1tYSIsMCx7ImN1cnZlIjotM31dLFsxLDAsIlxcYmV0YSBcXG90aW1lcyAxX1YiLDAseyJjdXJ2ZSI6LTN9XSxbMCwwLCIxX1YiLDAseyJhbmdsZSI6LTkwfV1d
+\documentclass[tikz]{standalone}
+\usepackage{quiver}
+\begin{document}
+\begin{tikzcd}[ampersand replacement=\&,cramped]
+	V \&\& {V \otimes W \otimes V}
+	\arrow["{1_V}", from=1-1, to=1-1, loop, in=145, out=215, distance=10mm]
+	\arrow["{1_V \otimes \gamma}", curve={height=-18pt}, from=1-1, to=1-3]
+	\arrow["{\beta \otimes 1_V}", curve={height=-18pt}, from=1-3, to=1-1]
+\end{tikzcd}
+\end{document}
