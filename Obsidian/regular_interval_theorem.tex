@@ -1,0 +1,13 @@
+% https://q.uiver.app/#q=WzAsMyxbMCwwLCJcXFNpZ21hXzBcXHRpbWVzIFswLDFdIl0sWzIsMCwiTSJdLFsyLDIsIlswLDFdIl0sWzAsMSwiXFxjb25nIiwwLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV0sWzAsMiwicCIsMl0sWzEsMiwiZiJdXQ==
+\documentclass[tikz]{standalone}
+\usepackage{quiver}
+\begin{document}
+\begin{tikzcd}[ampersand replacement=\&,cramped]
+	{\Sigma_0\times [0,1]} \&\& M \\
+	\\
+	\&\& {[0,1]}
+	\arrow["\cong", dashed, from=1-1, to=1-3]
+	\arrow["p"', from=1-1, to=3-3]
+	\arrow["f", from=1-3, to=3-3]
+\end{tikzcd}
+\end{document}

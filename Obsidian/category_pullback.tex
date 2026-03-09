@@ -1,0 +1,18 @@
+% https://q.uiver.app/#q=WzAsNSxbMSwzLCJBIl0sWzMsMywiWCJdLFszLDEsIkIiXSxbMSwxLCJQIl0sWzAsMCwiWiJdLFswLDEsImYiLDJdLFsyLDEsImciXSxbMywyLCJwXzIiXSxbMywwLCJwXzEiLDJdLFs0LDAsInpfMSIsMix7ImN1cnZlIjoyfV0sWzQsMiwiel8yIiwwLHsiY3VydmUiOi0yfV0sWzQsMywiIXUiLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XV0=
+\documentclass[tikz]{standalone}
+\usepackage{quiver}
+\begin{document}
+\begin{tikzcd}[ampersand replacement=\&,cramped]
+	Z \&\&\& \\
+	\& P \&\& B \\
+	\\
+	\& A \&\& X
+	\arrow["{!u}", dashed, from=1-1, to=2-2]
+	\arrow["{z_2}", curve={height=-12pt}, from=1-1, to=2-4]
+	\arrow["{z_1}"', curve={height=12pt}, from=1-1, to=4-2]
+	\arrow["{p_2}", from=2-2, to=2-4]
+	\arrow["{p_1}"', from=2-2, to=4-2]
+	\arrow["g", from=2-4, to=4-4]
+	\arrow["f"', from=4-2, to=4-4]
+\end{tikzcd}
+\end{document}
