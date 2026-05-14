@@ -1,0 +1,13 @@
+% https://q.uiver.app/#q=WzAsMyxbMCwwLCJcXG1hdGhmcmFre1V9KFxcbWF0aGZyYWt7Z30pIl0sWzAsMiwiXFxtYXRoZnJha3tnfSJdLFsyLDIsIkEiXSxbMSwwLCJpIl0sWzEsMiwiXFx2YXJwaGkiLDJdLFswLDIsIiFcXHRpbGRle1xcdmFycGhpfSIsMCx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dXQ==
+\documentclass[tikz]{standalone}
+\usepackage{quiver}
+\begin{document}
+\begin{tikzcd}
+	{\mathfrak{U}(\mathfrak{g})} && \\
+	\\
+	{\mathfrak{g}} && A
+	\arrow["{!\tilde{\phi}}", dashed, from=1-1, to=3-3]
+	\arrow["i", from=3-1, to=1-1]
+	\arrow["\phi"', from=3-1, to=3-3]
+\end{tikzcd}
+\end{document}
