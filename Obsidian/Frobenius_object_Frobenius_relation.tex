@@ -1,0 +1,16 @@
+% https://q.uiver.app/#q=WzAsNSxbMCwwLCJBXFxvdGltZXMgQSJdLFsyLDAsIkFcXG90aW1lcyBBXFxvdGltZXMgQSJdLFswLDIsIkFcXG90aW1lcyBBXFxvdGltZXMgQSJdLFsyLDIsIkFcXG90aW1lcyBBIl0sWzEsMSwiQSJdLFswLDEsIlxcZGVsdGFcXG90aW1lc1xcb3BlcmF0b3JuYW1le2lkfV97QX0iXSxbMCwyLCJcXG9wZXJhdG9ybmFtZXtpZH1fe0F9XFxvdGltZXNcXGRlbHRhIiwyXSxbMiwzLCIgXFxtdSBcXG90aW1lcyAgXFxvcGVyYXRvcm5hbWV7aWR9X3tBfSIsMl0sWzEsMywiIFxcb3BlcmF0b3JuYW1le2lkfV97QX1cXG90aW1lcyBcXG11Il0sWzAsNCwiXFxtdSJdLFs0LDMsIlxcZGVsdGEiXV0=
+\documentclass[tikz]{standalone}
+\input{preambles.tex}
+\begin{document}
+\begin{tikzcd}
+	{A\otimes A} && {A\otimes A\otimes A} \\
+	& A \\
+	{A\otimes A\otimes A} && {A\otimes A}
+	\arrow["{\delta\otimes\operatorname{id}_{A}}", from=1-1, to=1-3]
+	\arrow["\mu", from=1-1, to=2-2]
+	\arrow["{\operatorname{id}_{A}\otimes\delta}"', from=1-1, to=3-1]
+	\arrow["{ \operatorname{id}_{A}\otimes \mu}", from=1-3, to=3-3]
+	\arrow["\delta", from=2-2, to=3-3]
+	\arrow["{ \mu \otimes  \operatorname{id}_{A}}"', from=3-1, to=3-3]
+\end{tikzcd}
+\end{document}
