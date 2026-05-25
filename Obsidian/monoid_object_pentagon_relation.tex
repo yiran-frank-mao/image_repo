@@ -1,0 +1,15 @@
+% https://q.uiver.app/#q=WzAsNSxbMCwyLCIoTVxcb3RpbWVzIE0pXFxvdGltZXMgTSJdLFsyLDIsIk1cXG90aW1lcyhNXFxvdGltZXMgTSkiXSxbMSwwLCJNIl0sWzAsMCwiTVxcb3RpbWVzIE0iXSxbMiwwLCJNXFxvdGltZXMgTSJdLFswLDEsIlxcYWxwaGEiXSxbMywyLCJcXG11Il0sWzQsMiwiXFxtdSIsMl0sWzEsNCwiXFxpZCBcXG90aW1lcyBcXG11IiwyXSxbMCwzLCJcXG11XFxvdGltZXMgXFxpZCJdXQ==
+\documentclass[tikz]{standalone}
+\input{preambles}
+\begin{document}
+\begin{tikzcd}
+	{M\otimes M} & M & {M\otimes M} \\
+	\\
+	{(M\otimes M)\otimes M} && {M\otimes(M\otimes M)}
+	\arrow["\mu", from=1-1, to=1-2]
+	\arrow["\mu"', from=1-3, to=1-2]
+	\arrow["{\mu\otimes \id}", from=3-1, to=1-1]
+	\arrow["\alpha", from=3-1, to=3-3]
+	\arrow["{\id \otimes \mu}"', from=3-3, to=1-3]
+\end{tikzcd}
+\end{document}

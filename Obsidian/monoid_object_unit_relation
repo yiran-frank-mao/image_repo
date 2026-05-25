@@ -1,0 +1,15 @@
+% https://q.uiver.app/#q=WzAsNCxbMiwyLCJNIl0sWzQsMCwiTVxcb3RpbWVzIFxcbWF0aGRzezF9Il0sWzIsMCwiTVxcb3RpbWVzIE0iXSxbMCwwLCJcXG1hdGhkc3sxfVxcb3RpbWVzIE0iXSxbMSwwLCJcXHJob197WFxcb3RpbWVzIFxcbWF0aGRzezF9fSJdLFszLDIsIlxcZXRhXFxvdGltZXMgXFxpZCJdLFsxLDIsIlxcaWRcXG90aW1lcyBcXGV0YSIsMl0sWzMsMCwiXFxsYW1iZGFfe1hcXG90aW1lcyBcXG1hdGhkc3sxfX0iLDJdLFsyLDAsIlxcbXUiXV0=
+\documentclass[tikz]{standalone}
+\input{preambles}
+\begin{document}
+\begin{tikzcd}
+	{\mathds{1}\otimes M} && {M\otimes M} && {M\otimes \mathds{1}} \\
+	\\
+	&& M
+	\arrow["{\eta\otimes \id}", from=1-1, to=1-3]
+	\arrow["{\lambda_{X\otimes \mathds{1}}}"', from=1-1, to=3-3]
+	\arrow["\mu", from=1-3, to=3-3]
+	\arrow["{\id\otimes \eta}"', from=1-5, to=1-3]
+	\arrow["{\rho_{X\otimes \mathds{1}}}", from=1-5, to=3-3]
+\end{tikzcd}
+\end{document}
