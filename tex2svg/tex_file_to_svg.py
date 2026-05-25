@@ -197,7 +197,8 @@ if __name__ == "__main__":
                 branch=args.github_branch,
             )
             img_html = build_img_html(raw_url, width=args.img_width)
+            print(img_html)
             copy_to_clipboard(img_html)
-            print(f"Copied to clipboard: {img_html}")
+            print(f"Copied to clipboard.")
     except (RuntimeError, FileNotFoundError, ValueError) as e:
         print(f"An error occurred: {e}")
