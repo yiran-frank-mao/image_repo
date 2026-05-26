@@ -1,0 +1,65 @@
+\documentclass[border=3pt]{standalone}
+\usepackage{quantikz}
+
+\tikzcdset{every arrow/.append style={no head,line width=0.45pt}}
+
+\newcommand{\muzero}{%
+\begin{quantikz}[wire types={n,n},row sep=0.35cm,column sep=0.45cm,baseline=(current bounding box.center)]
+{} \arrow[r] & \bullet
+\end{quantikz}%
+}
+
+\newcommand{\muone}{%
+\begin{quantikz}[wire types={n,n},row sep=0.35cm,column sep=0.45cm,baseline=(current bounding box.center)]
+\bullet \arrow[r] & \bullet
+\end{quantikz}%
+}
+
+\newcommand{\mutwo}{%
+\begin{quantikz}[wire types={n,n,n},row sep=0.12cm,column sep=0.45cm,baseline=(current bounding box.center)]
+\bullet \arrow[dr] & {} \\
+{}                 & \bullet \\
+\bullet \arrow[ur] & {}
+\end{quantikz}%
+}
+
+\newcommand{\cross}{%
+\begin{quantikz}[wire types={n,n},row sep=0.35cm,column sep=0.45cm,baseline=(current bounding box.center)]
+\bullet \arrow[dr] & \bullet \\
+\bullet \arrow[ur] & \bullet
+\end{quantikz}%
+}
+
+\newcommand{\twoid}{%
+\begin{quantikz}[wire types={n,n},row sep=0.35cm,column sep=0.45cm,baseline=(current bounding box.center)]
+\bullet \arrow[r] & \bullet \\
+\bullet \arrow[r] & \bullet
+\end{quantikz}%
+}
+
+\newcommand{\braidleft}{%
+\begin{quantikz}[wire types={n,n,n},row sep=0.35cm,column sep=0.45cm,baseline=(current bounding box.center)]
+\bullet \arrow[r]  & \bullet \arrow[dr] & \bullet \arrow[r]  & \bullet \\
+\bullet \arrow[dr] & \bullet \arrow[ur] & \bullet \arrow[dr] & \bullet \\
+\bullet \arrow[ur] & \bullet \arrow[r]  & \bullet \arrow[ur] & \bullet
+\end{quantikz}%
+}
+
+\newcommand{\braidright}{%
+\begin{quantikz}[wire types={n,n,n},row sep=0.35cm,column sep=0.45cm,baseline=(current bounding box.center)]
+\bullet \arrow[dr] & \bullet \arrow[r]  & \bullet \arrow[dr] & \bullet \\
+\bullet \arrow[ur] & \bullet \arrow[dr] & \bullet \arrow[ur] & \bullet \\
+\bullet \arrow[r]  & \bullet \arrow[ur] & \bullet \arrow[r]  & \bullet
+\end{quantikz}%
+}
+
+\begin{document}
+
+\begin{tabular}{ccc}
+\muzero & \muone & \mutwo \\[0.5em]
+\(\scriptstyle \mu^{(0)}\) &
+\(\scriptstyle \mu^{(1)}\) &
+\(\scriptstyle \mu^{(2)}\)
+\end{tabular}
+
+\end{document}
