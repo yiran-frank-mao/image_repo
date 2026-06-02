@@ -1,0 +1,16 @@
+% https://q.uiver.app/#q=WzAsNyxbMCwwLCJNXzEgXFxvdGltZXMgTV8xIl0sWzIsMCwiTV8yIFxcb3RpbWVzIE1fMiJdLFswLDEsIk1fMSJdLFsyLDEsIk1fMiJdLFs0LDAsIlxcbWF0aGRzezF9Il0sWzYsMCwiTV8xIl0sWzYsMSwiTV8yIl0sWzAsMSwiZiBcXG90aW1lcyBmIl0sWzAsMiwiXFxtdV8xIiwyXSxbMSwzLCJcXG11XzIiXSxbMiwzLCJmIiwyXSxbNCw1LCJcXGV0YV8xIl0sWzQsNiwiXFxldGFfMiIsMl0sWzUsNiwiZiJdXQ==
+\documentclass[tikz]{standalone}
+\input{preambles.tex}
+\begin{document}
+\begin{tikzcd}
+	{M_1 \otimes M_1} && {M_2 \otimes M_2} && {\mathds{1}} && {M_1} \\
+	{M_1} && {M_2} &&&& {M_2}
+	\arrow["{f \otimes f}", from=1-1, to=1-3]
+	\arrow["{\mu_1}"', from=1-1, to=2-1]
+	\arrow["{\mu_2}", from=1-3, to=2-3]
+	\arrow["{\eta_1}", from=1-5, to=1-7]
+	\arrow["{\eta_2}"', from=1-5, to=2-7]
+	\arrow["f", from=1-7, to=2-7]
+	\arrow["f"', from=2-1, to=2-3]
+\end{tikzcd}
+\end{document}
