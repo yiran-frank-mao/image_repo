@@ -1,0 +1,16 @@
+% https://q.uiver.app/#q=WzAsNixbMSwwLCIoWFxcb3RpbWVzIFkpXFxvdGltZXMgWiJdLFszLDAsIlogXFxvdGltZXMgKFhcXG90aW1lcyBZKSJdLFswLDEsIlhcXG90aW1lcyAoWSBcXG90aW1lcyBaKSJdLFsxLDIsIlhcXG90aW1lcyhaXFxvdGltZXMgWSkiXSxbMywyLCIoWFxcb3RpbWVzIFopIFxcb3RpbWVzIFkiXSxbNCwxLCIoWlxcb3RpbWVzIFgpXFxvdGltZXMgWSJdLFswLDEsIlxcdGF1X3tYLCBZXFxvdGltZXMgWn0iXSxbMiwwLCJcXGFscGhhX3tYLFksWn1eey0xfSJdLFsyLDMsIlxcaWRfe1h9IFxcb3RpbWVzIFxcdGF1X3tZLFp9IiwyXSxbMyw0LCJcXGFscGhhX3tYLFosWX1eey0xfSIsMl0sWzEsNSwiXFxhbHBoYV97WixYLFl9XnstMX0iXSxbNCw1LCJcXHRhdV97WCxafVxcb3RpbWVzIFxcaWRfe1l9IiwyXV0=
+\documentclass[tikz]{standalone}
+\input{preambles.tex}
+\begin{document}
+\begin{tikzcd}
+	& {(X\otimes Y)\otimes Z} && {Z \otimes (X\otimes Y)} & \\
+	{X\otimes (Y \otimes Z)} &&&& {(Z\otimes X)\otimes Y} \\
+	& {X\otimes(Z\otimes Y)} && {(X\otimes Z) \otimes Y}
+	\arrow["{\tau_{X, Y\otimes Z}}", from=1-2, to=1-4]
+	\arrow["{\alpha_{Z,X,Y}^{-1}}", from=1-4, to=2-5]
+	\arrow["{\alpha_{X,Y,Z}^{-1}}", from=2-1, to=1-2]
+	\arrow["{\id_{X} \otimes \tau_{Y,Z}}"', from=2-1, to=3-2]
+	\arrow["{\alpha_{X,Z,Y}^{-1}}"', from=3-2, to=3-4]
+	\arrow["{\tau_{X,Z}\otimes \id_{Y}}"', from=3-4, to=2-5]
+\end{tikzcd}
+\end{document}
