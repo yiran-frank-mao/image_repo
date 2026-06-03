@@ -36,13 +36,13 @@
 \node[dot] at (mL) {};
 
 % first equals sign
-\node at ($(mL)+(0.9cm,0)$) {\Large $=$};
+\node at ($(mL)+(0.7cm,0)$) {\Large $=$};
 
 %================================================
 % MIDDLE:  \mu
 %================================================
-\coordinate (a1) at ($(mL)+(1.8cm,0.275cm)$);
-\coordinate (a2) at ($(mL)+(1.8cm,-0.275cm)$);
+\coordinate (a1) at ($(mL)+(1.4cm,0.275cm)$);
+\coordinate (a2) at ($(mL)+(1.4cm,-0.275cm)$);
 \coordinate (b1) at ($(a1)+(0.65cm,0)$);
 \coordinate (b2) at ($(a2)+(0.65cm,0)$);
 \coordinate (mM) at ($(b1)!0.5!(b2)+(0.65cm,0)$);
@@ -56,7 +56,7 @@
   \node[dot] at (\p) {};
 
 % second equals sign
-\node at ($(mM)+(0.9cm,0)$) {\Large $=$};
+\node at ($(mM)+(0.7cm,0)$) {\Large $=$};
 
 %================================================
 % RIGHT SIDE:  \mu \circ \beta^{-1}
@@ -70,7 +70,7 @@
   crossing height=5.5mm,
   border height=1mm,
   every strand/.style={line width=0.45pt}
-] at ($(b2)+(0.65cm,0)+(2.0cm,0)$) {braid={s_1^{-1}}};
+] at ($(b2)+(0.65cm,0)+(1.5cm,0)$) {braid={s_1^{-1}}};
 
 \coordinate (mR) at ($(brR-1-e)!0.5!(brR-2-e)+(0.65cm,0)$);
 
