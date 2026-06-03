@@ -1,0 +1,26 @@
+% https://q.uiver.app/#q=WzAsMTIsWzEsMCwiKFhcXG90aW1lcyBZKSBcXG90aW1lcyBaIl0sWzAsMSwiKFlcXG90aW1lcyBYKSBcXG90aW1lcyBaIl0sWzIsMSwiWFxcb3RpbWVzIChZXFxvdGltZXMgWikiXSxbMCwyLCJZXFxvdGltZXMgKFhcXG90aW1lcyBaKSJdLFsyLDIsIlhcXG90aW1lcyAoWlxcb3RpbWVzIFkpIl0sWzAsMywiWVxcb3RpbWVzIChaXFxvdGltZXMgWCkiXSxbMiwzLCIoWFxcb3RpbWVzIFopIFxcb3RpbWVzIFkiXSxbMCw0LCIoWVxcb3RpbWVzIFopIFxcb3RpbWVzIFgiXSxbMiw0LCIoWlxcb3RpbWVzIFgpIFxcb3RpbWVzIFkiXSxbMCw1LCIoWlxcb3RpbWVzIFkpIFxcb3RpbWVzIFgiXSxbMiw1LCJaXFxvdGltZXMoWFxcb3RpbWVzIFkpIl0sWzEsNiwiWlxcb3RpbWVzKFlcXG90aW1lcyBYKSJdLFswLDEsIntcXHRhdV97WCxZfVxcb3RpbWVzIFxcaWRfWn0iLDJdLFswLDIsIntcXGFscGhhX3tYLFksWn19Il0sWzEsMywie1xcYWxwaGFfe1ksWCxafX0iLDJdLFsyLDQsIntcXGlkX1ggXFxvdGltZXMgXFx0YXVfe1ksWn19Il0sWzMsNSwie1xcaWRfWSBcXG90aW1lcyBcXHRhdV97WCxafX0iLDJdLFs0LDYsIntcXGFscGhhX3tYLFosWX1eey0xfX0iXSxbNSw3LCJ7XFxhbHBoYV97WSxaLFh9XnstMX19IiwyXSxbNiw4LCJ7XFx0YXVfe1gsWn0gXFxvdGltZXMgXFxpZF9ZfSJdLFs3LDksIntcXHRhdV97WSxafSBcXG90aW1lcyBcXGlkX1h9IiwyXSxbOCwxMCwie1xcYWxwaGFfe1osWCxZfX0iXSxbOSwxMSwie1xcYWxwaGFfe1osWSxYfX0iLDJdLFsxMCwxMSwie1xcaWRfWiBcXG90aW1lcyBcXHRhdV97WCxZfX0iXV0=
+\documentclass[tikz]{standalone}
+\input{preambles.tex}
+\begin{document}
+\begin{tikzcd}
+	& {(X\otimes Y) \otimes Z} & \\
+	{(Y\otimes X) \otimes Z} && {X\otimes (Y\otimes Z)} \\
+	{Y\otimes (X\otimes Z)} && {X\otimes (Z\otimes Y)} \\
+	{Y\otimes (Z\otimes X)} && {(X\otimes Z) \otimes Y} \\
+	{(Y\otimes Z) \otimes X} && {(Z\otimes X) \otimes Y} \\
+	{(Z\otimes Y) \otimes X} && {Z\otimes(X\otimes Y)} \\
+	& {Z\otimes(Y\otimes X)}
+	\arrow["{{\tau_{X,Y}\otimes \id_Z}}"', from=1-2, to=2-1]
+	\arrow["{{\alpha_{X,Y,Z}}}", from=1-2, to=2-3]
+	\arrow["{{\alpha_{Y,X,Z}}}"', from=2-1, to=3-1]
+	\arrow["{{\id_X \otimes \tau_{Y,Z}}}", from=2-3, to=3-3]
+	\arrow["{{\id_Y \otimes \tau_{X,Z}}}"', from=3-1, to=4-1]
+	\arrow["{{\alpha_{X,Z,Y}^{-1}}}", from=3-3, to=4-3]
+	\arrow["{{\alpha_{Y,Z,X}^{-1}}}"', from=4-1, to=5-1]
+	\arrow["{{\tau_{X,Z} \otimes \id_Y}}", from=4-3, to=5-3]
+	\arrow["{{\tau_{Y,Z} \otimes \id_X}}"', from=5-1, to=6-1]
+	\arrow["{{\alpha_{Z,X,Y}}}", from=5-3, to=6-3]
+	\arrow["{{\alpha_{Z,Y,X}}}"', from=6-1, to=7-2]
+	\arrow["{{\id_Z \otimes \tau_{X,Y}}}", from=6-3, to=7-2]
+\end{tikzcd}
+\end{document}
