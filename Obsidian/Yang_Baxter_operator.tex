@@ -1,0 +1,26 @@
+% https://q.uiver.app/#q=WzAsMTIsWzEsMCwiKFhcXG90aW1lcyBYKSBcXG90aW1lcyBYIl0sWzAsMSwiKFhcXG90aW1lcyBYKSBcXG90aW1lcyBYIl0sWzIsMSwiWFxcb3RpbWVzIChYXFxvdGltZXMgWCkiXSxbMCwyLCJYXFxvdGltZXMgKFhcXG90aW1lcyBYKSJdLFsyLDIsIlhcXG90aW1lcyAoWFxcb3RpbWVzIFgpIl0sWzAsMywiWFxcb3RpbWVzIChYXFxvdGltZXMgWCkiXSxbMCw0LCIoWFxcb3RpbWVzIFgpIFxcb3RpbWVzIFgiXSxbMCw1LCIoWFxcb3RpbWVzIFgpIFxcb3RpbWVzIFgiXSxbMSw2LCJYXFxvdGltZXMoWFxcb3RpbWVzIFgpIl0sWzIsNSwiWFxcb3RpbWVzKFhcXG90aW1lcyBYKSJdLFsyLDMsIihYXFxvdGltZXMgWCkgXFxvdGltZXMgWCJdLFsyLDQsIihYXFxvdGltZXMgWCkgXFxvdGltZXMgWCJdLFswLDEsInJcXG90aW1lcyBcXGlkX1giLDJdLFswLDIsIlxcYWxwaGFfe1gsWCxYfSJdLFsxLDMsIlxcYWxwaGFfe1gsWCxYfSIsMl0sWzIsNCwiXFxpZF9YIFxcb3RpbWVzIHIiXSxbMyw1LCJcXGlkX1ggXFxvdGltZXMgciIsMl0sWzUsNiwiXFxhbHBoYV97WCxYLFh9XnstMX0iLDJdLFs2LDcsInIgXFxvdGltZXMgXFxpZF9YIiwyXSxbNyw4LCJcXGFscGhhX3tYLFgsWH0iLDJdLFs5LDgsIlxcaWQgXFxvdGltZXMgciJdLFsxMCwxMSwiciBcXG90aW1lcyBcXGlkX1giXSxbMTEsOSwiXFxhbHBoYV97WCxYLFh9Il0sWzQsMTAsIlxcYWxwaGFfe1gsWCxYfV57LTF9Il1d
+\documentclass[tikz]{standalone}
+\input{preambles.tex}
+\begin{document}
+\begin{tikzcd}
+	& {(X\otimes X) \otimes X} & \\
+	{(X\otimes X) \otimes X} && {X\otimes (X\otimes X)} \\
+	{X\otimes (X\otimes X)} && {X\otimes (X\otimes X)} \\
+	{X\otimes (X\otimes X)} && {(X\otimes X) \otimes X} \\
+	{(X\otimes X) \otimes X} && {(X\otimes X) \otimes X} \\
+	{(X\otimes X) \otimes X} && {X\otimes(X\otimes X)} \\
+	& {X\otimes(X\otimes X)}
+	\arrow["{r\otimes \id_X}"', from=1-2, to=2-1]
+	\arrow["{\alpha_{X,X,X}}", from=1-2, to=2-3]
+	\arrow["{\alpha_{X,X,X}}"', from=2-1, to=3-1]
+	\arrow["{\id_X \otimes r}", from=2-3, to=3-3]
+	\arrow["{\id_X \otimes r}"', from=3-1, to=4-1]
+	\arrow["{\alpha_{X,X,X}^{-1}}", from=3-3, to=4-3]
+	\arrow["{\alpha_{X,X,X}^{-1}}"', from=4-1, to=5-1]
+	\arrow["{r \otimes \id_X}", from=4-3, to=5-3]
+	\arrow["{r \otimes \id_X}"', from=5-1, to=6-1]
+	\arrow["{\alpha_{X,X,X}}", from=5-3, to=6-3]
+	\arrow["{\alpha_{X,X,X}}"', from=6-1, to=7-2]
+	\arrow["{\id \otimes r}", from=6-3, to=7-2]
+\end{tikzcd}
+\end{document}
