@@ -1,0 +1,28 @@
+% https://q.uiver.app/#q=WzAsMTIsWzEsMCwiKFhcXG90aW1lcyBZKSBcXG90aW1lcyBaIl0sWzAsMSwiKFlcXG90aW1lcyBYKSBcXG90aW1lcyBaIl0sWzIsMSwiWFxcb3RpbWVzIChZXFxvdGltZXMgWikiXSxbMCwyLCJZXFxvdGltZXMgKFhcXG90aW1lcyBaKSJdLFsyLDIsIlhcXG90aW1lcyAoWlxcb3RpbWVzIFkpIl0sWzAsMywiWVxcb3RpbWVzIChaXFxvdGltZXMgWCkiXSxbMiwzLCIoWFxcb3RpbWVzIFopIFxcb3RpbWVzIFkiXSxbMCw0LCIoWVxcb3RpbWVzIFopIFxcb3RpbWVzIFgiXSxbMiw0LCIoWlxcb3RpbWVzIFgpIFxcb3RpbWVzIFkiXSxbMCw1LCIoWlxcb3RpbWVzIFkpIFxcb3RpbWVzIFgiXSxbMiw1LCJaXFxvdGltZXMoWFxcb3RpbWVzIFkpIl0sWzEsNiwiWlxcb3RpbWVzKFlcXG90aW1lcyBYKSJdLFswLDEsIntcXHRhdV97WCxZfVxcb3RpbWVzIFxcaWRfWn0iLDJdLFswLDIsIntcXGFscGhhX3tYLFksWn19IiwwLHsiY29sb3VyIjpbMjQwLDYwLDYwXX0sWzI0MCw2MCw2MCwxXV0sWzEsMywie1xcYWxwaGFfe1ksWCxafX0iLDIseyJjb2xvdXIiOlswLDYwLDYwXX0sWzAsNjAsNjAsMV1dLFsyLDQsIntcXGlkX1ggXFxvdGltZXMgXFx0YXVfe1ksWn19IiwwLHsiY29sb3VyIjpbMjQwLDYwLDYwXX0sWzI0MCw2MCw2MCwxXV0sWzMsNSwie1xcaWRfWSBcXG90aW1lcyBcXHRhdV97WCxafX0iLDIseyJjb2xvdXIiOlswLDYwLDYwXX0sWzAsNjAsNjAsMV1dLFs0LDYsIntcXGFscGhhX3tYLFosWX1eey0xfX0iLDAseyJjb2xvdXIiOlsyNDAsNjAsNjBdfSxbMjQwLDYwLDYwLDFdXSxbNSw3LCJ7XFxhbHBoYV97WSxaLFh9XnstMX19IiwyLHsiY29sb3VyIjpbMCw2MCw2MF19LFswLDYwLDYwLDFdXSxbNiw4LCJ7XFx0YXVfe1gsWn0gXFxvdGltZXMgXFxpZF9ZfSIsMCx7ImNvbG91ciI6WzI0MCw2MCw2MF19LFsyNDAsNjAsNjAsMV1dLFs3LDksIntcXHRhdV97WSxafSBcXG90aW1lcyBcXGlkX1h9IiwyLHsiY29sb3VyIjpbMCw2MCw2MF19LFswLDYwLDYwLDFdXSxbOCwxMCwie1xcYWxwaGFfe1osWCxZfX0iLDAseyJjb2xvdXIiOlsyNDAsNjAsNjBdfSxbMjQwLDYwLDYwLDFdXSxbOSwxMSwie1xcYWxwaGFfe1osWSxYfX0iLDIseyJjb2xvdXIiOlswLDYwLDYwXX0sWzAsNjAsNjAsMV1dLFsxMCwxMSwie1xcaWRfWiBcXG90aW1lcyBcXHRhdV97WCxZfX0iXSxbMCwxMCwiXFx0YXVfe1hcXG90aW1lcyBZLCBafSIsMix7ImNvbG91ciI6WzI0MCw2MCw2MF19LFsyNDAsNjAsNjAsMV1dLFsxLDExLCJcXHRhdV97WVxcb3RpbWVzIFgsIFp9IiwwLHsiY29sb3VyIjpbMCw2MCw2MF19LFswLDYwLDYwLDFdXV0=
+\documentclass[tikz]{standalone}
+\input{preambles.tex}
+\begin{document}
+\begin{tikzcd}
+	& {(X\otimes Y) \otimes Z} & \\
+	{(Y\otimes X) \otimes Z} && {X\otimes (Y\otimes Z)} \\
+	{Y\otimes (X\otimes Z)} && {X\otimes (Z\otimes Y)} \\
+	{Y\otimes (Z\otimes X)} && {(X\otimes Z) \otimes Y} \\
+	{(Y\otimes Z) \otimes X} && {(Z\otimes X) \otimes Y} \\
+	{(Z\otimes Y) \otimes X} && {Z\otimes(X\otimes Y)} \\
+	& {Z\otimes(Y\otimes X)}
+	\arrow["{{\tau_{X,Y}\otimes \id_Z}}"', from=1-2, to=2-1]
+	\arrow["{{\alpha_{X,Y,Z}}}", color={rgb,255:red,92;green,92;blue,214}, from=1-2, to=2-3]
+	\arrow["{\tau_{X\otimes Y, Z}}"', color={rgb,255:red,92;green,92;blue,214}, from=1-2, to=6-3]
+	\arrow["{{\alpha_{Y,X,Z}}}"', color={rgb,255:red,214;green,92;blue,92}, from=2-1, to=3-1]
+	\arrow["{\tau_{Y\otimes X, Z}}", color={rgb,255:red,214;green,92;blue,92}, from=2-1, to=7-2]
+	\arrow["{{\id_X \otimes \tau_{Y,Z}}}", color={rgb,255:red,92;green,92;blue,214}, from=2-3, to=3-3]
+	\arrow["{{\id_Y \otimes \tau_{X,Z}}}"', color={rgb,255:red,214;green,92;blue,92}, from=3-1, to=4-1]
+	\arrow["{{\alpha_{X,Z,Y}^{-1}}}", color={rgb,255:red,92;green,92;blue,214}, from=3-3, to=4-3]
+	\arrow["{{\alpha_{Y,Z,X}^{-1}}}"', color={rgb,255:red,214;green,92;blue,92}, from=4-1, to=5-1]
+	\arrow["{{\tau_{X,Z} \otimes \id_Y}}", color={rgb,255:red,92;green,92;blue,214}, from=4-3, to=5-3]
+	\arrow["{{\tau_{Y,Z} \otimes \id_X}}"', color={rgb,255:red,214;green,92;blue,92}, from=5-1, to=6-1]
+	\arrow["{{\alpha_{Z,X,Y}}}", color={rgb,255:red,92;green,92;blue,214}, from=5-3, to=6-3]
+	\arrow["{{\alpha_{Z,Y,X}}}"', color={rgb,255:red,214;green,92;blue,92}, from=6-1, to=7-2]
+	\arrow["{{\id_Z \otimes \tau_{X,Y}}}", from=6-3, to=7-2]
+\end{tikzcd}
+\end{document}
