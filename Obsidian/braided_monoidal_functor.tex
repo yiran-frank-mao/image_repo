@@ -1,0 +1,14 @@
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJGKFgpIFxcb3RpbWVzIEYoWSkiXSxbMCwyLCJGKFggXFxvdGltZXMgWSkiXSxbMiwyLCJGKFkgXFxvdGltZXMgWCkiXSxbMiwwLCJGKFkpIFxcb3RpbWVzIEYoWCkiXSxbMSwyLCJGKFxcdGF1X3tYLFl9KSJdLFswLDMsIlxcdGF1J197RihYKSxGKFkpfSJdLFswLDEsIkZfMiIsMl0sWzMsMiwiRl8yIiwyXV0=
+\documentclass[tikz]{standalone}
+\input{preamble.tex}
+\begin{document}
+\begin{tikzcd}
+	{F(X) \otimes F(Y)} && {F(Y) \otimes F(X)} \\
+	\\
+	{F(X \otimes Y)} && {F(Y \otimes X)}
+	\arrow["{\tau'_{F(X),F(Y)}}", from=1-1, to=1-3]
+	\arrow["{F_2}"', from=1-1, to=3-1]
+	\arrow["{F_2}"', from=1-3, to=3-3]
+	\arrow["{F(\tau_{X,Y})}", from=3-1, to=3-3]
+\end{tikzcd}
+\end{document}
