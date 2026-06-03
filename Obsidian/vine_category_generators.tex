@@ -1,0 +1,113 @@
+\documentclass[border=3pt]{standalone}
+\usepackage{quantikz}
+
+\usepackage{tikz}
+\usetikzlibrary{braids}
+
+\tikzcdset{every arrow/.append style={no head,line width=0.45pt}}
+
+\newcommand{\muzero}{%
+\begin{quantikz}[wire types={n,n},row sep=0.35cm,column sep=0.45cm,baseline=(current bounding box.center)]
+{} \arrow[r] & \bullet
+\end{quantikz}%
+}
+
+\newcommand{\muone}{%
+\begin{quantikz}[wire types={n,n},row sep=0.35cm,column sep=0.45cm,baseline=(current bounding box.center)]
+\bullet \arrow[r] & \bullet
+\end{quantikz}%
+}
+
+\newcommand{\mutwo}{%
+\begin{quantikz}[wire types={n,n,n},row sep=0.12cm,column sep=0.45cm,baseline=(current bounding box.center)]
+\bullet \arrow[dr] & {} \\
+{}                 & \bullet \\
+\bullet \arrow[ur] & {}
+\end{quantikz}%
+}
+
+\newcommand{\cross}{%
+\begin{quantikz}[wire types={n,n},row sep=0.35cm,column sep=0.45cm,baseline=(current bounding box.center)]
+\bullet \arrow[dr] & \bullet \\
+\bullet \arrow[ur] & \bullet
+\end{quantikz}%
+}
+
+\newcommand{\twoid}{%
+\begin{quantikz}[wire types={n,n},row sep=0.35cm,column sep=0.45cm,baseline=(current bounding box.center)]
+\bullet \arrow[r] & \bullet \\
+\bullet \arrow[r] & \bullet
+\end{quantikz}%
+}
+
+\newcommand{\braidleft}{%
+\begin{quantikz}[wire types={n,n,n},row sep=0.35cm,column sep=0.45cm,baseline=(current bounding box.center)]
+\bullet \arrow[r]  & \bullet \arrow[dr] & \bullet \arrow[r]  & \bullet \\
+\bullet \arrow[dr] & \bullet \arrow[ur] & \bullet \arrow[dr] & \bullet \\
+\bullet \arrow[ur] & \bullet \arrow[r]  & \bullet \arrow[ur] & \bullet
+\end{quantikz}%
+}
+
+\newcommand{\braidright}{%
+\begin{quantikz}[wire types={n,n,n},row sep=0.35cm,column sep=0.45cm,baseline=(current bounding box.center)]
+\bullet \arrow[dr] & \bullet \arrow[r]  & \bullet \arrow[dr] & \bullet \\
+\bullet \arrow[ur] & \bullet \arrow[dr] & \bullet \arrow[ur] & \bullet \\
+\bullet \arrow[r]  & \bullet \arrow[ur] & \bullet \arrow[r]  & \bullet
+\end{quantikz}%
+}
+
+\newcommand{\braido}{
+\begin{tikzpicture}[baseline=(current bounding box.center)]
+  % Named braid, rotated so it runs left-to-right
+  \pic[
+    rotate=90,
+    name=b,
+    braid/.cd,
+    number of strands=2,
+    width=4.5mm, % smaller than the default spacing
+    crossing height=4.5mm, % shorter braid body
+    border height=0.75mm,   % shorter strand ends
+    % every strand/.style={thick},
+  ] {braid={s_1}};
+
+  % dots on the left side (starts)
+  \foreach \i in {1,2}
+    \fill (b-\i-s) circle (1.8pt);
+
+  % dots on the right side (ends)
+  \foreach \i in {1,2}
+    \fill (b-\i-e) circle (1.8pt);
+\end{tikzpicture}
+}
+
+\newcommand{\braidt}{
+\begin{tikzpicture}[baseline=(current bounding box.center)]
+  % Named braid, rotated so it runs left-to-right
+  \pic[
+    rotate=90,
+    name=b,
+    braid/.cd,
+    number of strands=2,
+    width=4.5mm, % smaller than the default spacing
+    crossing height=4.5mm, % shorter braid body
+    border height=0.75mm,   % shorter strand ends
+    % every strand/.style={thick},
+  ] {braid={s_1^{-1}}};
+
+  % dots on the left side (starts)
+  \foreach \i in {1,2}
+    \fill (b-\i-s) circle (1.8pt);
+
+  % dots on the right side (ends)
+  \foreach \i in {1,2}
+    \fill (b-\i-e) circle (1.8pt);
+\end{tikzpicture}
+}
+
+\begin{document}
+
+\begin{tabular}{ccccc}
+\muzero \quad & \muone \quad & \mutwo \quad & \braidt \quad & \braido
+\end{tabular}
+
+\end{document}
