@@ -1,0 +1,39 @@
+\documentclass[tikz,border=8pt]{standalone}
+\usepackage{tikz}
+
+\input{preambles}
+\input{tqft_commands}
+
+\newcommand{\sourcecobordism}{%
+\begin{scope}[scale=1,rotate=90,]
+    \pgfmathsetmacro{\voffset}{.08};
+	\pgfmathsetmacro{\hoffset}{.15};
+	\pgfmathsetmacro{\hoffsetTop}{.12};
+
+	\coordinate (a1) at (-1,-5);
+	\coordinate (a2) at ($ (a1) + (1.4,0)$);
+	\coordinate (a3) at ($ (a1) + (2.8,0)$);
+	\coordinate (b1) at ($ (a1) + (0,1)$);
+	\coordinate (b2) at ($ (a2) + (0,1) $);
+	\coordinate (b3) at ($ (a3) + (0,1) $);
+    \coordinate (c0) at ($ (b1) + (.7,1.5) - (1.4, 0)$);
+	\coordinate (c1) at ($ (b1) + (.7,1.5)$);
+	\coordinate (c2) at ($ (c1) + (1.4,0) $);
+    \coordinate (c3) at ($ (c1) - (1.4,0) $);
+	\coordinate (d1) at ($ (c1) + (0,2)$);
+	\coordinate (d2) at ($ (d1) - (1.4,0)$);
+	\coordinate (e1) at ($ (d1) + (0,1)$);
+	\coordinate (e2) at ($ (d2) + (0,1)$);
+	\coordinate (f) at ($ (e1) + (.7,1.5)$);
+
+    \FullBraid{(e1)}{.3}{2}
+    \FullInvBraid{($(a1) + (.7, 0)$)}{.3}{2}
+\end{scope}}
+
+\begin{document}
+
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \begin{scope}[shift={(0,0)}]\sourcecobordism\end{scope}
+\end{tikzpicture}
+
+\end{document}

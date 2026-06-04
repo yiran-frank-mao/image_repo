@@ -1,0 +1,769 @@
+\usepackage{xcolor}
+\definecolor{dark-red}{rgb}{0.7,0.25,0.25}
+\definecolor{dark-blue}{rgb}{0.15,0.15,0.55}
+\definecolor{medium-blue}{rgb}{0,0,.8}
+\definecolor{DarkGreen}{RGB}{0,150,0}
+\definecolor{rho}{named}{red}
+\definecolor{wString}{named}{orange}
+\definecolor{xString}{named}{red}
+\definecolor{yString}{named}{blue}
+\definecolor{zString}{named}{DarkGreen}
+
+% tricky way to iterate macros over a list
+\def\semicolon{;}
+\def\applytolist#1{
+    \expandafter\def\csname multi#1\endcsname##1{
+        \def\multiack{##1}\ifx\multiack\semicolon
+            \def\next{\relax}
+        \else
+            \csname #1\endcsname{##1}
+            \def\next{\csname multi#1\endcsname}
+        \fi
+        \next}
+    \csname multi#1\endcsname}
+
+\let\checkmark\relax
+
+\def\anchor{\tikz[baseline=0, scale=.1]{\fill[red, line width=.1](-.3,-1.35) arc(-180:0:.15) arc(-99:-15:.73) -- ++(.15,-.01) -- ++(-.05,.4) -- ++(-.3,-.2) -- ++(.05,-.07) arc(-15:-90:.6) -- ++(-.12,.12) -- ++(0,1.73) -- ++(.5,0) -- ++(0,.13) -- ++(-.35,0) arc(0:180:.27) -- ++(-.35,0) -- ++(0,-.13) -- ++(.5,0) -- ++(0,-1.73) -- ++(-.12,-.12) arc(270:180+15:.6) -- ++(.05,.07) -- ++(-.3,.2) -- ++(-.05,-.4) -- ++(.15,.01) arc(180+15:270:.73) -- cycle;}}
+
+
+% TikZ operators %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usetikzlibrary{shapes}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{decorations,decorations.pathreplacing,decorations.markings}
+\usetikzlibrary{fit,calc,through}
+\usetikzlibrary{external}
+\tikzset{
+	super thick/.style={line width=3pt}
+}
+\tikzstyle{shaded}=[fill=red!10!blue!20!gray!30!white]
+\tikzstyle{unshaded}=[fill=white]
+\tikzstyle{empty box}=[circle, draw, thick, fill=white, opaque, inner sep=2mm]
+\tikzstyle{annular}=[scale=.7, inner sep=1mm, baseline]
+\tikzstyle{rectangular}=[scale=.75, inner sep=1mm, baseline=-.1cm]
+\tikzstyle{mid>}=[decoration={markings, mark=at position 0.5 with {\arrow{>}}}, postaction={decorate}]
+\tikzstyle{mid<}=[decoration={markings, mark=at position 0.5 with {\arrow{<}}}, postaction={decorate}]
+\tikzstyle{over}=[double, draw=white, super thick, double=]
+
+\newcommand{\roundNbox}[6]{
+	\draw[rounded corners=5pt, very thick, #1] ($#2+(-#3,-#3)+(-#4,0)$) rectangle ($#2+(#3,#3)+(#5,0)$);
+	\coordinate (ZZa) at ($#2+(-#4,0)$);
+	\coordinate (ZZb) at ($#2+(#5,0)$);
+	\node at ($1/2*(ZZa)+1/2*(ZZb)$) {#6};
+}
+
+
+\newcommand{\nbox}[6]{
+	\draw[very thick, #1] ($#2+(-#3,-#3)+(-#4,0)$) rectangle ($#2+(#3,#3)+(#5,0)$);
+	\coordinate (ZZa) at ($#2+(-#4,0)$);
+	\coordinate (ZZb) at ($#2+(#5,0)$);
+	\node at ($1/2*(ZZa)+1/2*(ZZb)$) {#6};
+}
+
+\newcommand{\ncircle}[5]{
+	\draw[very thick, #1] #2 circle (#3);
+	\node at #2 {#5};
+	\filldraw[red] ($#2+(#4:#3cm)$) circle (.05cm);
+%	\node at ($#2+(#4:.15cm)+(#4:#3cm)$) {$\star$};
+}
+
+  \newcommand{\tikzmath}[2][]
+     {\vcenter{\hbox{\begin{tikzpicture}[#1]#2
+                     \end{tikzpicture}}}
+     }
+
+% colors %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\cupcolor}{DarkGreen}
+\newcommand{\alphacolor}{blue}
+\newcommand{\betacolor}{red}
+
+
+
+% Commands for TQFT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Mbox}[4]{
+	\pgfmathsetmacro{\planeWidth}{#2};
+	\pgfmathsetmacro{\planeDepth}{#3};
+	
+	\draw[very thick, unshaded] ($ #1 + (-\planeDepth,\planeDepth) $) -- #1 -- ($ #1 + (\planeWidth,0) $) -- ($ #1 + (\planeWidth,0) + (-\planeDepth,\planeDepth) $) -- ($ #1 + (-\planeDepth,\planeDepth) $);
+
+	\node at ($#1+1/2*(#2,0)+1/2*(-#3,#3)$) {\rotatebox{-75}{#4}};
+}
+
+\newcommand{\CMbox}[6]{
+	\coordinate (#1) at #2;
+	%coordinate (box) is lower left corner of face of box.
+	\pgfmathsetmacro{\boxWidth}{#3};
+	\pgfmathsetmacro{\boxHeight}{#4};
+	\pgfmathsetmacro{\boxDepth}{#5};
+	\draw[unshaded, very thick] ($(#1) + (\boxWidth,\boxHeight) $) -- ($(#1) + (\boxWidth,\boxHeight) - (\boxDepth,-\boxDepth) $) -- ($(#1) + (0,\boxHeight) - (\boxDepth,-\boxDepth) $) -- ($(#1) - (\boxDepth,-\boxDepth) $);
+	\draw[unshaded, very thick] ($(#1) + (0,\boxHeight) $)  -- ($(#1) + (\boxWidth,\boxHeight) $) -- ($(#1) + (\boxWidth,0) $) -- (#1) -- ($(#1) - (\boxDepth,-\boxDepth) $);
+	\draw[very thick] ($(#1) + (0,\boxHeight) - (\boxDepth,-\boxDepth) $) -- ($(#1) + (0,\boxHeight) $) -- (#1);
+	\node at ($(#1) + 1/2*(\boxWidth,\boxHeight) $) {#6}; 
+}
+
+\newcommand{\halfDottedEllipse}[3]{
+	\draw[thick] #1 arc(-180:0:{#2} and {#3});
+	\draw[thick, dotted] ($ #1 + 2*(#2,0)$) arc(0:180:{#2} and {#3});
+}
+
+\newcommand{\upTube}[1]{
+	\fill[unshaded] #1 -- ($#1 + (0,.4)$) -- ($#1 + (.4,.4)$) -- ($#1 + (.4,0)$);
+	\draw[thick] #1 arc(-180:0:.2cm and .1cm);
+	\draw[thick, unshaded] #1 -- ($#1 + (0,.4)$) ;
+	\draw[thick] {($#1 + (.2,.4)$)} ellipse (.2 and .1);
+	\draw[thick, unshaded] ($#1 + (.4,0)$) -- ($#1 + (.4,.4)$);
+}
+
+\newcommand{\upTubeWithString}[2]{
+	\fill[unshaded] #1 -- ($#1 + (0,.4)$) -- ($#1 + (.4,.4)$) -- ($#1 + (.4,0)$);
+	\draw[thick] #1 arc(-180:0:.2cm and .1cm);
+	\draw[thick, unshaded] #1 -- ($#1 + (0,.4)$) ;
+	\draw[thick] {($#1 + (.2,.4)$)} ellipse (.2 and .1);
+	\draw[thick, unshaded] ($#1 + (.4,0)$) -- ($#1 + (.4,.4)$);
+	\draw[thick, #2] ($#1 + (.2,0) + (0,-.1) $) -- ($#1 + (.2,.4) + (0,-.1)$);
+}
+
+\newcommand{\downTube}[1]{
+	\draw[thick, unshaded] #1 -- ($#1 + (0,-.4)$) ;
+	\halfDottedEllipse{($#1 + (0,-.4)$)}{.2}{.1}
+	\draw[thick, unshaded] ($#1 + (.4,0)$) -- ($#1 + (.4,-.4)$);
+}
+
+\newcommand{\downTubeWithString}[2]{
+	\draw[thick, unshaded] #1 -- ($#1 + (0,-.4)$) ;
+	\halfDottedEllipse{($#1 + (0,-.4)$)}{.2}{.1}
+	\draw[thick, unshaded] ($#1 + (.4,0)$) -- ($#1 + (.4,-.4)$);
+	\draw[thick, #2] ($#1 + (.2,0) $) -- ($#1 + (.2,-.4) + (0,-.1)$);
+}
+
+
+\newcommand{\curvedTubeWithString}[2]{
+	\fill[unshaded] ($#1 + (-1.2,1.2) $) arc (180:-180:.2cm);
+	\draw[unshaded, thick] #1 arc (-90:90:.2cm) arc (270:180:.8cm) arc (0:-180:.2cm) arc (180:270:1.2cm);
+	\draw[thick] ($#1 + (-1.2,1.2) $) arc (180:0:.2cm);
+	\draw[thick, #2] ($#1 + (-.1,.2) $) arc (270:185:.9cm);
+	\draw[thick, #2] ($#1 + (-.1,.2) $) -- ($#1 + (.17,.2) $) ;
+}
+
+\newcommand{\curvedTubeNoString}[4]{
+	\filldraw[white, super thick, fill=white] #1 arc (-90:90:.2cm) arc (270:180:{#2 - .2}) -- ($#1 -(#2,0) - (.2,0) + (0,#2) + (0,.2) $) arc (180:270:{#2+.2});
+	\filldraw[unshaded, thick] #1 arc (-90:90:.2cm) arc (270:180:{#2 - .2}) -- ($#1 -(#2,0) - (.2,0) + (0,#2) + (0,.2) $) arc (180:270:{#2+.2});
+	\draw ($ #1 + (.18,.3) $) -- ($ #1 + (0,.3) $) arc (270:180:{#2 - .1});
+	\draw ($ #1+ (.18,.1) $) -- ($ #1+ (0,.1) $) arc (270:180:{#2+.1});
+	\roundNbox{unshaded}{($#1 - (#2,0) + (0,#2) + (0,.6) $)}{.4}{#3}{#3}{#4};
+}
+
+\newcommand{\straightTubeNoString}[3]{
+	\coordinate (ZZq) at #1;
+	\pgfmathsetmacro{\tubeLength}{#3};
+	\pgfmathsetmacro{\tubeWidth}{#2};
+	\pgfmathsetmacro{\buffer}{.05};	
+
+	\fill[unshaded] ($ (ZZq) + (-\tubeLength,0) + 2*(0,-\buffer) $) -- ($ (ZZq) + 2*(0,-\buffer) $) arc(-90:90:{\tubeWidth+\buffer} and {2*(\tubeWidth+\buffer)}) -- ($ (ZZq) + (-\tubeLength,0) + 4*(0,\tubeWidth) + 2*(0,\buffer) $) arc(90:270:{\tubeWidth+\buffer} and {2*(\tubeWidth+\buffer)}) ;
+	\draw[unshaded, thick]  ($ (ZZq) + (-\tubeLength,0) $) -- (ZZq) arc(-90:90:{\tubeWidth} and {2*\tubeWidth}) -- ($ (ZZq) + (-\tubeLength,0) + 4*(0,\tubeWidth) $) ;
+	\draw[thick] ($ (ZZq) + (-\tubeLength,0) $) arc(-90:90:{\tubeWidth} and {2*\tubeWidth}) arc(90:270:{\tubeWidth} and {2*\tubeWidth});
+}
+
+\newcommand{\straightCappedTube}[3]{
+	\coordinate (ZZq) at #1;
+	\pgfmathsetmacro{\tubeLength}{#3};
+	\pgfmathsetmacro{\tubeWidth}{#2};
+	\pgfmathsetmacro{\buffer}{.05};	
+
+	\fill[unshaded] ($ (ZZq) + (-\tubeLength,0) + 2*(0,-\buffer) $) -- ($ (ZZq) + 2*(0,-\buffer) $) arc(-90:90:{\tubeWidth+\buffer} and {2*(\tubeWidth+\buffer)}) -- ($ (ZZq) + (-\tubeLength,0) + 4*(0,\tubeWidth) + 2*(0,\buffer) $) arc(90:270:{\tubeWidth+\buffer} and {2*(\tubeWidth+\buffer)}) ;
+	\draw[unshaded, thick]  ($ (ZZq) + (-\tubeLength,0) $) -- (ZZq) arc(-90:90:{\tubeWidth} and {2*\tubeWidth}) -- ($ (ZZq) + (-\tubeLength,0) + 4*(0,\tubeWidth) $) ;
+	\draw[thick] ($ (ZZq) + (-\tubeLength,0) $) arc(270:90:{2*\tubeWidth});
+}
+
+
+\newcommand{\straightTubeWithString}[4]{
+	\coordinate (ZZq) at #1;
+	\pgfmathsetmacro{\tubeLength}{#3};
+	\pgfmathsetmacro{\tubeWidth}{#2};
+	\pgfmathsetmacro{\buffer}{.05};	
+
+	\fill[unshaded] ($ (ZZq) + (-\tubeLength,0) + 2*(0,-\buffer) $) -- ($ (ZZq) + 2*(0,-\buffer) $) arc(-90:90:{\tubeWidth+\buffer} and {2*(\tubeWidth+\buffer)}) -- ($ (ZZq) + (-\tubeLength,0) + 4*(0,\tubeWidth) + 2*(0,\buffer) $) arc(90:270:{\tubeWidth+\buffer} and {2*(\tubeWidth+\buffer)}) ;
+	\draw[unshaded, thick]  ($ (ZZq) + (-\tubeLength,0) $) -- (ZZq) arc(-90:90:{\tubeWidth} and {2*\tubeWidth}) -- ($ (ZZq) + (-\tubeLength,0) + 4*(0,\tubeWidth) $) ;
+	\draw[thick] ($ (ZZq) + (-\tubeLength,0) $) arc(-90:90:{\tubeWidth} and {2*\tubeWidth}) arc(90:270:{\tubeWidth} and {2*\tubeWidth});
+	\draw[thick, #4] ($(ZZq) + (\tubeWidth,0) + 2*(0,\tubeWidth) $) -- ($ (ZZq) + (-\tubeLength,0) + 2*(0,\tubeWidth) + (\tubeWidth,0)$);
+}
+
+\newcommand{\straightTubeTwoStrings}[4]{
+	\fill[unshaded] ($ #1 + (-#2,-.1) $) -- ($ #1 + (0,-.1) $) arc(-90:90:.15cm and .3cm) -- ($ #1 + (-#2,.5) $) ;
+	\draw[unshaded, thick]  ($ #1 + (-#2,0) $) -- #1 arc(-90:90:.1cm and .2cm) -- ($ #1 + (-#2,.4) $) ;
+	\draw[thick] ($ #1 + (-#2,0) $) arc(-90:90:.1cm and .2cm) arc(90:270:.1cm and .2cm);
+	\draw[thick, #3] ($#1 + (.08,.27) $) -- ($ #1 + (-#2,.27) + (.08,0)$);
+	\draw[thick, #4] ($#1 + (.08,.13) $) -- ($ #1 + (-#2,.13) + (.08,0)$);
+}
+
+
+\newcommand{\invisibleTube}[1]{
+	\fill[unshaded] #1 arc (-90:90:.1cm) arc (270:180:1cm) arc (0:180:.1cm) arc (180:270:1.2cm);
+}
+
+\newcommand{\invisibleTubeWithString}[2]{
+	\fill[unshaded] #1 arc (-90:90:.1cm) arc (270:180:1cm) arc (0:180:.1cm) arc (180:270:1.2cm);
+	\draw[thick, #2] ($#1 + (0,.1) $) arc (270:190:1.1cm) -- ($#1 + (-1.1,1.3) $);
+	\draw[thick, #2] ($#1 + (0,.1) $) -- ($#1 + (0,.1) + (.1,0)$);
+}
+
+
+\newcommand{\pairOfPants}[2]{
+	%pair of pants:
+	\draw[thick] #1 .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ #1 + (.7,1.5) $);
+	\draw[thick] ($ #1 + (2,0) $) .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ #1 + (2,0) + (-.7,1.5) $);
+	\draw[thick] ($ #1 + (.6,0) $).. controls ++(90:.8cm) and ++(90:.8cm) .. ($ #1 + (1.4,0) $); 
+	\halfDottedEllipse{($ #1 + (.7,1.5) $)}{.3}{.1}
+	\halfDottedEllipse{#1}{.3}{.1}
+	\halfDottedEllipse{($ #1 + (1.4,0) $)}{.3}{.1}
+}
+
+\newcommand{\topPairOfPants}[2]{
+	%pair of pants:a
+	\draw[thick] #1 .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ #1 + (.7,1.5) $);
+	\draw[thick] ($ #1 + (2,0) $) .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ #1 + (2,0) + (-.7,1.5) $);
+	\draw[thick] ($ #1 + (.6,0) $).. controls ++(90:.8cm) and ++(90:.8cm) .. ($ #1 + (1.4,0) $); 
+	\draw[thick] ($ #1 + (1,1.5) $) ellipse (.3cm and .1cm);
+	\halfDottedEllipse{#1}{.3}{.1}
+	\halfDottedEllipse{($ #1 + (1.4,0) $)}{.3}{.1}
+}
+
+\newcommand{\pairOfPantsNoCircles}[2]{
+	%pair of pants:
+	\draw[thick] #1 .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ #1 + (.7,1.5) $);
+	\draw[thick] ($ #1 + (2,0) $) .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ #1 + (2,0) + (-.7,1.5) $);
+	\draw[thick] ($ #1 + (.6,0) $).. controls ++(90:.8cm) and ++(90:.8cm) .. ($ #1 + (1.4,0) $); 
+%	\halfDottedEllipse{($ #1 + (.7,1.5) $)}{.3}{.1}
+%	\draw[thick] ($ #1 + (1,1.5) $) ellipse (.3cm and .1cm);
+%	\halfDottedEllipse{#1}{.3}{.1}
+%	\halfDottedEllipse{($ #1 + (1.4,0) $)}{.3}{.1}
+}
+
+\newcommand{\coPants}[2]{
+	%pair of pants:
+	\draw[thick] #1 .. controls ++(270:.8cm) and ++(90:.8cm) .. ($ #1 + (.7,-1.5) $);
+	\draw[thick] ($ #1 + (2,0) $) .. controls ++(270:.8cm) and ++(90:.8cm) .. ($ #1 + (2,0) + (-.7,-1.5) $);
+	\draw[thick] ($ #1 + (.6,0) $).. controls ++(270:.8cm) and ++(270:.8cm) .. ($ #1 + (1.4,0) $); 
+	\draw[thick, dotted] ($ #1 + (1,-1.5) $) ellipse (.3cm and .1cm);
+	\halfDottedEllipse{($ #1 + (.7,-1.5) $)}{.3}{.1}
+    \halfDottedEllipse{#1}{.3}{.1}
+	\halfDottedEllipse{($ #1 + (1.4,0) $)}{.3}{.1}
+}
+
+\newcommand{\topCoPants}[2]{
+	%pair of pants:
+	\draw[thick] #1 .. controls ++(270:.8cm) and ++(90:.8cm) .. ($ #1 + (.7,-1.5) $);
+	\draw[thick] ($ #1 + (2,0) $) .. controls ++(270:.8cm) and ++(90:.8cm) .. ($ #1 + (2,0) + (-.7,-1.5) $);
+	\draw[thick] ($ #1 + (.6,0) $).. controls ++(270:.8cm) and ++(270:.8cm) .. ($ #1 + (1.4,0) $); 
+    \draw[thick] ($ #1 + (1,-1.5) $) ellipse (.3cm and .1cm);
+    \halfDottedEllipse{#1}{.3}{.1}
+	\halfDottedEllipse{($ #1 + (1.4,0) $)}{.3}{.1}
+}
+
+\newcommand{\StartCoPants}[2]{
+    %pair of pants:
+	\draw[thick] #1 .. controls ++(270:.8cm) and ++(90:.8cm) .. ($ #1 + (.7,-1.5) $);
+	\draw[thick] ($ #1 + (2,0) $) .. controls ++(270:.8cm) and ++(90:.8cm) .. ($ #1 + (2,0) + (-.7,-1.5) $);
+	\draw[thick] ($ #1 + (.6,0) $).. controls ++(270:.8cm) and ++(270:.8cm) .. ($ #1 + (1.4,0) $); 
+    \draw[thick] ($ #1 + (.3, 0) $) ellipse (.3cm and .1cm);
+    \draw[thick] ($ #1 + (.3, 0) + (1.4,0) $) ellipse (.3cm and .1cm);
+}
+
+\newcommand{\topCylinder}[3]{
+	\draw[thick] #1 -- ($ #1 + (0,#3) $);
+	\draw[thick] ($ #1 + 2*(#2,0) $) -- ($ #1 + (0,#3) + 2*(#2,0) $);
+	\draw[thick] ($ #1 + (#2,#3) $) ellipse (#2 and {1/3*#2});
+    \halfDottedEllipse{#1}{#2}{{1/3*#2}}
+}
+
+\newcommand{\bottomCylinder}[3]{
+	\draw[thick] #1 -- ($ #1 + (0,#3) $);
+	\draw[thick] ($ #1 + 2*(#2,0) $) -- ($ #1 + 2*(#2,0) + (0,#3) $);
+	\halfDottedEllipse{#1}{#2}{{1/3*#2}}	
+}
+
+\newcommand{\emptyCylinder}[3]{
+	\draw[thick] #1 -- ($ #1 + (0,#3) $);
+	\draw[thick] ($ #1 + 2*(#2,0) $) -- ($ #1 + 2*(#2,0) + (0,#3) $);	
+}
+
+\newcommand{\RightSlantCylinder}[2]{
+	\draw[thick] #1 .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ #1 + (.7,1.5) $);
+	\draw[thick] ($ #1 + (.6,0) $).. controls ++(90:.8cm) and ++(270:.8cm) .. ($ #1 + (1.3,1.5) $); 
+	\halfDottedEllipse{($ #1 + (.7,1.5) $)}{.3}{.1}
+	\halfDottedEllipse{#1}{.3}{.1}
+}
+
+\newcommand{\StartRightSlantCylinder}[2]{
+	\draw[thick] #1 .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ #1 + (.7,1.5) $);
+	\draw[thick] ($ #1 + (.6,0) $).. controls ++(90:.8cm) and ++(270:.8cm) .. ($ #1 + (1.3,1.5) $); 
+	\halfDottedEllipse{($ #1 + (.7,1.5) $)}{.3}{.1}
+	\halfDottedEllipse{#1}{.3}{.1}
+    \draw[thick] ($#1 + (.3, 0)$) ellipse (.3cm and .1cm);
+}
+
+\newcommand{\LeftSlantCylinder}[2]{
+	\draw[thick] #1 .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ #1 + (-.7,1.5) $);
+	\draw[thick] ($ #1 + (.6,0) $).. controls ++(90:.8cm) and ++(270:.8cm) .. ($ #1 + (-.1,1.5) $); 
+	\halfDottedEllipse{($ #1 + (-.7,1.5) $)}{.3}{.1}
+	\halfDottedEllipse{#1}{.3}{.1}
+}
+
+\newcommand{\StartLeftSlantCylinder}[2]{
+	\draw[thick] #1 .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ #1 + (-.7,1.5) $);
+	\draw[thick] ($ #1 + (.6,0) $).. controls ++(90:.8cm) and ++(270:.8cm) .. ($ #1 + (-.1,1.5) $); 
+	% \halfDottedEllipse{($ #1 + (-.7,1.5) $)}{.3}{.1}
+	\halfDottedEllipse{#1}{.3}{.1}
+    \draw[thick] ($#1 + (-.7,1.5) + (.3, 0)$) ellipse (.3cm and .1cm);
+}
+
+\newcommand{\EndLeftSlantCylinder}[2]{
+	\draw[thick] #1 .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ #1 + (-.7,1.5) $);
+	\draw[thick] ($ #1 + (.6,0) $).. controls ++(90:.8cm) and ++(270:.8cm) .. ($ #1 + (-.1,1.5) $); 
+	\halfDottedEllipse{($ #1 + (-.7,1.5) $)}{.3}{.1}
+	% \halfDottedEllipse{#1}{.3}{.1}
+    \draw[thick] ($#1 + (.3, 0)$) ellipse (.3cm and .1cm);
+}
+
+\newcommand{\cross}[3]{
+
+	\coordinate (ZZz) at #1;
+	\pgfmathsetmacro{\tubeHeight}{#3};
+	\pgfmathsetmacro{\tubeRadius}{#2};
+	\pgfmathsetmacro{\buffer}{.2};	
+
+	%crossing
+	\draw[thick] ($ (ZZz) +(\tubeHeight,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + 2*(\tubeRadius,0) + (0,\tubeHeight) $);
+	\draw[thick] ($ (ZZz) + (\tubeHeight,0) - 2*(\tubeRadius,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (0,\tubeHeight) $);
+    
+	\draw[thick] (ZZz) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) - 2*(\tubeRadius,0) $);
+	\draw[thick] ($ (ZZz) + 2*(\tubeRadius,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) $);
+
+    \halfDottedEllipse{($ #1 + (1.4, 0) $)}{.3}{.1}
+    \halfDottedEllipse{($ #1 $)}{.3}{.1}
+}
+
+
+\newcommand{\braid}[3]{
+	\coordinate (ZZz) at #1;
+	\pgfmathsetmacro{\tubeHeight}{#3};
+	\pgfmathsetmacro{\tubeRadius}{#2};
+	\pgfmathsetmacro{\buffer}{.2};	
+
+	%crossing
+	\draw[thick] ($ (ZZz) +(\tubeHeight,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + 2*(\tubeRadius,0) + (0,\tubeHeight) $);
+	\draw[thick] ($ (ZZz) + (\tubeHeight,0) - 2*(\tubeRadius,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (0,\tubeHeight) $);
+
+	\fill[unshaded] ($ (ZZz) - (\buffer,0) $) .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) - 2*(\tubeRadius,0) - (\buffer,0) $) -- ($ (ZZz) + (\tubeHeight,\tubeHeight) + (\buffer,0) $)  .. controls ++(270:.8cm) and ++(90:.8cm) .. ($ (ZZz) + 2*(\tubeRadius,0) + (\buffer,0) $);
+	\draw[thick] (ZZz) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) - 2*(\tubeRadius,0) $);
+	\draw[thick] ($ (ZZz) + 2*(\tubeRadius,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) $);
+
+    \halfDottedEllipse{($ #1 + (1.4, 0) $)}{.3}{.1}
+    \halfDottedEllipse{($ #1 $)}{.3}{.1}
+    \halfDottedEllipse{($ #1 + (1.4, \tubeHeight) $)}{.3}{.1}
+}
+
+\newcommand{\EndBraid}[3]{
+	\coordinate (ZZz) at #1;
+	\pgfmathsetmacro{\tubeHeight}{#3};
+	\pgfmathsetmacro{\tubeRadius}{#2};
+	\pgfmathsetmacro{\buffer}{.2};	
+
+	%crossing
+	\draw[thick] ($ (ZZz) +(\tubeHeight,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + 2*(\tubeRadius,0) + (0,\tubeHeight) $);
+	\draw[thick] ($ (ZZz) + (\tubeHeight,0) - 2*(\tubeRadius,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (0,\tubeHeight) $);
+
+	\fill[unshaded] ($ (ZZz) - (\buffer,0) $) .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) - 2*(\tubeRadius,0) - (\buffer,0) $) -- ($ (ZZz) + (\tubeHeight,\tubeHeight) + (\buffer,0) $)  .. controls ++(270:.8cm) and ++(90:.8cm) .. ($ (ZZz) + 2*(\tubeRadius,0) + (\buffer,0) $);
+    
+	\draw[thick] (ZZz) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) - 2*(\tubeRadius,0) $);
+	\draw[thick] ($ (ZZz) + 2*(\tubeRadius,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) $);
+
+    \halfDottedEllipse{($ #1 + (1.4, \tubeHeight) $)}{.3}{.1}
+    \draw[thick] ($#1 + (.3, 0)$) ellipse (.3cm and .1cm);
+    \draw[thick] ($#1 + (.3, 0) + (1.4, 0)$) ellipse (.3cm and .1cm);
+}
+
+\newcommand{\FullBraid}[3]{
+	\coordinate (ZZz) at #1;
+	\pgfmathsetmacro{\tubeHeight}{#3};
+	\pgfmathsetmacro{\tubeRadius}{#2};
+	\pgfmathsetmacro{\buffer}{.2};	
+
+	%crossing
+	\draw[thick] ($ (ZZz) +(\tubeHeight,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + 2*(\tubeRadius,0) + (0,\tubeHeight) $);
+	\draw[thick] ($ (ZZz) + (\tubeHeight,0) - 2*(\tubeRadius,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (0,\tubeHeight) $);
+
+	\fill[unshaded] ($ (ZZz) - (\buffer,0) $) .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) - 2*(\tubeRadius,0) - (\buffer,0) $) -- ($ (ZZz) + (\tubeHeight,\tubeHeight) + (\buffer,0) $)  .. controls ++(270:.8cm) and ++(90:.8cm) .. ($ (ZZz) + 2*(\tubeRadius,0) + (\buffer,0) $);
+    
+	\draw[thick] (ZZz) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) - 2*(\tubeRadius,0) $);
+	\draw[thick] ($ (ZZz) + 2*(\tubeRadius,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) $);
+
+    \draw[thick] ($#1 + (.3, 0) + (0, \tubeHeight)$) ellipse (.3cm and .1cm);
+    \draw[thick] ($#1 + (.3, 0) + (1.4, 0) + (0, \tubeHeight)$) ellipse (.3cm and .1cm);
+    \draw[thick] ($#1 + (.3, 0)$) ellipse (.3cm and .1cm);
+    \draw[thick] ($#1 + (.3, 0) + (1.4, 0)$) ellipse (.3cm and .1cm);
+}
+
+\newcommand{\invBraid}[3]{
+
+	\coordinate (ZZz) at #1;
+	\pgfmathsetmacro{\tubeHeight}{#3};
+	\pgfmathsetmacro{\tubeRadius}{#2};
+	\pgfmathsetmacro{\buffer}{.2};	
+
+    \draw[thick] (ZZz) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) - 2*(\tubeRadius,0) $);
+	\draw[thick] ($ (ZZz) + 2*(\tubeRadius,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) $);
+    
+    \fill[unshaded] ($ (ZZz) + (\tubeHeight,0) + (\buffer,0) $) .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ (ZZz) + 2*(\tubeRadius,0) + (0,\tubeHeight) + (\buffer,0) $) -- ($ (ZZz) + (0,\tubeHeight) - (\buffer,0) $)  .. controls ++(270:.8cm) and ++(90:.8cm) .. ($ (ZZz) + (\tubeHeight,0) - 2*(\tubeRadius,0) - (\buffer,0) $);
+
+    %crossing
+	\draw[thick] ($ (ZZz) +(\tubeHeight,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + 2*(\tubeRadius,0) + (0,\tubeHeight) $);
+	\draw[thick] ($ (ZZz) + (\tubeHeight,0) - 2*(\tubeRadius,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (0,\tubeHeight) $);
+	
+    \halfDottedEllipse{($ #1 + (1.4, 0) $)}{.3}{.1}
+    \halfDottedEllipse{($ #1 $)}{.3}{.1}
+    \halfDottedEllipse{($ #1 + (0, \tubeHeight) $)}{.3}{.1}
+}
+
+\newcommand{\StartInvBraid}[3]{
+
+	\coordinate (ZZz) at #1;
+	\pgfmathsetmacro{\tubeHeight}{#3};
+	\pgfmathsetmacro{\tubeRadius}{#2};
+	\pgfmathsetmacro{\buffer}{.2};	
+
+    \draw[thick] (ZZz) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) - 2*(\tubeRadius,0) $);
+	\draw[thick] ($ (ZZz) + 2*(\tubeRadius,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) $);
+    
+    \fill[unshaded] ($ (ZZz) + (\tubeHeight,0) + (\buffer,0) $) .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ (ZZz) + 2*(\tubeRadius,0) + (0,\tubeHeight) + (\buffer,0) $) -- ($ (ZZz) + (0,\tubeHeight) - (\buffer,0) $)  .. controls ++(270:.8cm) and ++(90:.8cm) .. ($ (ZZz) + (\tubeHeight,0) - 2*(\tubeRadius,0) - (\buffer,0) $);
+
+    %crossing
+	\draw[thick] ($ (ZZz) +(\tubeHeight,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + 2*(\tubeRadius,0) + (0,\tubeHeight) $);
+	\draw[thick] ($ (ZZz) + (\tubeHeight,0) - 2*(\tubeRadius,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (0,\tubeHeight) $);
+	
+    \draw[thick] ($#1 + (0, \tubeHeight) + (.3, 0)$) ellipse (.3cm and .1cm);
+    \draw[thick] ($#1 + (0, \tubeHeight) +  (.3, 0) + (1.4, 0)$) ellipse (.3cm and .1cm);
+}
+
+\newcommand{\FullInvBraid}[3]{
+
+	\coordinate (ZZz) at #1;
+	\pgfmathsetmacro{\tubeHeight}{#3};
+	\pgfmathsetmacro{\tubeRadius}{#2};
+	\pgfmathsetmacro{\buffer}{.2};	
+
+    \draw[thick] (ZZz) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) - 2*(\tubeRadius,0) $);
+	\draw[thick] ($ (ZZz) + 2*(\tubeRadius,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (\tubeHeight,\tubeHeight) $);
+    
+    \fill[unshaded] ($ (ZZz) + (\tubeHeight,0) + (\buffer,0) $) .. controls ++(90:.8cm) and ++(270:.8cm) .. ($ (ZZz) + 2*(\tubeRadius,0) + (0,\tubeHeight) + (\buffer,0) $) -- ($ (ZZz) + (0,\tubeHeight) - (\buffer,0) $)  .. controls ++(270:.8cm) and ++(90:.8cm) .. ($ (ZZz) + (\tubeHeight,0) - 2*(\tubeRadius,0) - (\buffer,0) $);
+
+    %crossing
+	\draw[thick] ($ (ZZz) +(\tubeHeight,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + 2*(\tubeRadius,0) + (0,\tubeHeight) $);
+	\draw[thick] ($ (ZZz) + (\tubeHeight,0) - 2*(\tubeRadius,0) $) .. controls ++(90:.7cm) and ++(270:.7cm) .. ($ (ZZz) + (0,\tubeHeight) $);
+	
+    \draw[thick] ($#1 + (.3, 0) + (0, \tubeHeight)$) ellipse (.3cm and .1cm);
+    \draw[thick] ($#1 + (.3, 0) + (1.4, 0) + (0, \tubeHeight)$) ellipse (.3cm and .1cm);
+    \draw[thick] ($#1 + (.3, 0)$) ellipse (.3cm and .1cm);
+    \draw[thick] ($#1 + (.3, 0) + (1.4, 0)$) ellipse (.3cm and .1cm);
+}
+
+
+
+\newcommand{\plane}[3]{
+	%#1 is coordinate of lower left corner of plane
+	\pgfmathsetmacro{\planeWidth}{#2};
+	\pgfmathsetmacro{\planeDepth}{#3};
+	
+	\draw[thick] ($ #1 + (-\planeDepth,\planeDepth) $) -- #1 -- ($ #1 + (\planeWidth,0) $) -- ($ #1 + (\planeWidth,0) + (-\planeDepth,\planeDepth) $) -- ($ #1 + (-\planeDepth,\planeDepth) $);
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\newcommand{\multiplication}[5]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 + 5/6*(0,#2) $) -- ($ #1 - 5/6*(0,#2) $);
+	\draw[thick, red] ($ #1 + 1/3*(0,#2) - 1/5*(#2,0) $) -- ($ #1 - 2/3*(#2,0) $);
+	\draw[thick, red] ($ #1 - 1/3*(0,#2) - 1/5*(#2,0) $) -- ($ #1 - 2/3*(#2,0) $);
+	\draw[very thick] #1 ellipse ({2/3*#2} and {5/6*#2});
+	\filldraw[very thick, unshaded] ($ #1 + 1/3*(0,#2) $) circle (1/5*#2);
+	\filldraw[very thick, unshaded] ($ #1 - 1/3*(0,#2) $) circle (1/5*#2);
+	\node at ($ #1 + (.2,0) + 5/8*(0,#2)$) {\scriptsize{$#5$}};
+	\node at ($ #1 + (.2,0) $) {\scriptsize{$#4$}};
+	\node at ($ #1 + (.2,0) - 5/8*(0,#2)$) {\scriptsize{$#3$}};
+}
+
+%%%%%%%%%%%%%%%%%%%
+% Tensors
+%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\tensor}[6]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 + 14/23*(0,#2) - 1/3*(#2,0) $) -- ($ #1 - 14/23*(0,#2) - 1/3*(#2,0) $);
+	\draw ($ #1 + 14/23*(0,#2) + 1/3*(#2,0) $) -- ($ #1 - 14/23*(0,#2) + 1/3*(#2,0) $);
+%	\draw[thick, red] ($ #1 + 1/3*(0,#2) - 1/5*(#2,0) $) -- ($ #1 - 2/3*(#2,0) $);
+	\draw[thick, red] ($ #1 - 1/3*(#2,0) - 1/5*(#2,0) $) -- ($ #1 - 5/6*(#2,0) $);
+	\draw[thick, red] ($ #1 + 1/3*(#2,0) - 1/5*(#2,0) $) .. controls ++(180:.2cm) and ++(0:.2cm) .. ($ #1 - 1/3*(#2,0) + 2/5*(0,#2) $) .. controls ++(180:.2cm) and ++(0:.2cm) .. ($ #1 - 5/6*(#2,0) $);
+	\draw[very thick] #1 ellipse ( {5/6*#2} and {2/3*#2});
+	\filldraw[very thick, unshaded] ($ #1 + 1/3*(#2,0) $) circle (1/5*#2);
+	\filldraw[very thick, unshaded] ($ #1 - 1/3*(#2,0) $) circle (1/5*#2);
+	\node at ($ #1 + (.2,0) - 1/3*(#2,0) - 1/3*(0,#2) $) {\scriptsize{$#3$}};
+	\node at ($ #1 + (.2,0) - 1/3*(#2,0) + 1/3*(0,#2) $) {\scriptsize{$#4$}};
+	\node at ($ #1 + (.2,0) + 1/3*(#2,0) - 1/3*(0,#2) $) {\scriptsize{$#5$}};
+	\node at ($ #1 + (.2,0) + 1/3*(#2,0) + 1/3*(0,#2) $) {\scriptsize{$#6$}};
+}
+
+\newcommand{\tensorRightId}[5]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 + 14/23*(0,#2) - 1/3*(#2,0) $) -- ($ #1 - 14/23*(0,#2) - 1/3*(#2,0) $);
+	\draw ($ #1 + 14/23*(0,#2) + 1/3*(#2,0) $) -- ($ #1 - 14/23*(0,#2) + 1/3*(#2,0) $);
+	\draw[thick, red] ($ #1 - 1/3*(#2,0) - 1/5*(#2,0) $) -- ($ #1 - 5/6*(#2,0) $);
+	\draw[very thick] #1 ellipse ( {5/6*#2} and {2/3*#2});
+	\filldraw[very thick, unshaded] ($ #1 - 1/3*(#2,0) $) circle (1/5*#2);
+	\node at ($ #1 + (.2,0) - 1/3*(#2,0) - 1/3*(0,#2) $) {\scriptsize{$#3$}};
+	\node at ($ #1 + (.2,0) - 1/3*(#2,0) + 1/3*(0,#2) $) {\scriptsize{$#4$}};
+	\node at ($ #1 + (.2,0) + 1/3*(#2,0) $) {\scriptsize{$#5$}};
+}
+
+\newcommand{\tensorRightIdZero}[4]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 + 14/23*(0,#2) - 1/3*(#2,0) $) -- ($ #1 - 14/23*(0,#2) - 1/3*(#2,0) $);
+	\draw[thick, red] ($ #1 - 1/3*(#2,0) - 1/5*(#2,0) $) -- ($ #1 - 5/6*(#2,0) $);
+	\draw[very thick] #1 ellipse ( {5/6*#2} and {2/3*#2});
+	\filldraw[very thick, unshaded] ($ #1 - 1/3*(#2,0) $) circle (1/5*#2);
+	\node at ($ #1 + (.2,0) - 1/3*(#2,0) - 1/3*(0,#2) $) {\scriptsize{$#3$}};
+	\node at ($ #1 + (.2,0) - 1/3*(#2,0) + 1/3*(0,#2) $) {\scriptsize{$#4$}};
+}
+
+\newcommand{\tensorRightIdZeroZero}[2]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw[thick, red] ($ #1 - 1/3*(#2,0) - 1/5*(#2,0) $) -- ($ #1 - 5/6*(#2,0) $);
+	\draw[very thick] #1 ellipse ( {5/6*#2} and {2/3*#2});
+	\filldraw[very thick, unshaded] ($ #1 - 1/3*(#2,0) $) circle (1/5*#2);
+}
+
+\newcommand{\tensorLeftRightId}[2]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 + 7/13*(0,#2) - 1/2*(#2,0) $) -- ($ #1 - 7/13*(0,#2) - 1/2*(#2,0) $);
+	\draw ($ #1 + 2/3*(0,#2) $) -- ($ #1 - 2/3*(0,#2) $);
+	\draw ($ #1 + 7/13*(0,#2) + 1/2*(#2,0) $) -- ($ #1 - 7/13*(0,#2) + 1/2*(#2,0) $);
+	\draw[thick, red] ($ #1 - 1/5*(#2,0) $) -- ($ #1 - 5/6*(#2,0) $);
+	\draw[very thick] #1 ellipse ( {5/6*#2} and {2/3*#2});
+	\filldraw[very thick, unshaded] ($ #1 $) circle (1/5*#2);
+}
+
+\newcommand{\tensorLeftRightIdEv}[2]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 + 7/13*(0,#2) - 1/2*(#2,0) $) -- ($ #1 - 7/13*(0,#2) - 1/2*(#2,0) $);
+	\draw ($ #1 $) -- ($ #1 - 2/3*(0,#2) $);
+	\draw ($ #1 + 7/13*(0,#2) + 1/2*(#2,0) $) -- ($ #1 - 7/13*(0,#2) + 1/2*(#2,0) $);
+	\draw[thick, red] ($ #1 - 1/5*(#2,0) $) -- ($ #1 - 5/6*(#2,0) $);
+	\draw[very thick] #1 ellipse ( {5/6*#2} and {2/3*#2});
+	\filldraw[very thick, unshaded] ($ #1 $) circle (1/5*#2);
+}
+
+\newcommand{\tensorLeftRightIdCoev}[2]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 + 7/13*(0,#2) - 1/2*(#2,0) $) -- ($ #1 - 7/13*(0,#2) - 1/2*(#2,0) $);
+	\draw ($ #1 + 2/3*(0,#2) $) -- ($ #1 $);
+	\draw ($ #1 + 7/13*(0,#2) + 1/2*(#2,0) $) -- ($ #1 - 7/13*(0,#2) + 1/2*(#2,0) $);
+	\draw[thick, red] ($ #1 - 1/5*(#2,0) $) -- ($ #1 - 5/6*(#2,0) $);
+	\draw[very thick] #1 ellipse ( {5/6*#2} and {2/3*#2});
+	\filldraw[very thick, unshaded] ($ #1 $) circle (1/5*#2);
+}
+
+\newcommand{\tensorRightIdEv}[4]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 - 1/3*(#2,0) $) -- ($ #1 - 14/23*(0,#2) - 1/3*(#2,0) $);
+	\draw ($ #1 + 14/23*(0,#2) + 1/3*(#2,0) $) -- ($ #1 - 14/23*(0,#2) + 1/3*(#2,0) $);
+	\draw[thick, red] ($ #1 - 1/3*(#2,0) - 1/5*(#2,0) $) -- ($ #1 - 5/6*(#2,0) $);
+	\draw[very thick] #1 ellipse ( {5/6*#2} and {2/3*#2});
+	\filldraw[very thick, unshaded] ($ #1 - 1/3*(#2,0) $) circle (1/5*#2);
+	\node at ($ #1 + (.2,0) - 1/3*(#2,0) - 1/3*(0,#2) $) {\scriptsize{$#3$}};
+	\node at ($ #1 + (.2,0) + 1/3*(#2,0) $) {\scriptsize{$#4$}};
+}
+
+\newcommand{\tensorRightIdCoev}[4]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 + 14/23*(0,#2) - 1/3*(#2,0) $) -- ($ #1 - 1/3*(#2,0) $);
+	\draw ($ #1 + 14/23*(0,#2) + 1/3*(#2,0) $) -- ($ #1 - 14/23*(0,#2) + 1/3*(#2,0) $);
+	\draw[thick, red] ($ #1 - 1/3*(#2,0) - 1/5*(#2,0) $) -- ($ #1 - 5/6*(#2,0) $);
+	\draw[very thick] #1 ellipse ( {5/6*#2} and {2/3*#2});
+	\filldraw[very thick, unshaded] ($ #1 - 1/3*(#2,0) $) circle (1/5*#2);
+	\node at ($ #1 + (.2,0) - 1/3*(#2,0) + 1/3*(0,#2) $) {\scriptsize{$#3$}};
+	\node at ($ #1 + (.2,0) + 1/3*(#2,0) $) {\scriptsize{$#4$}};
+}
+
+\newcommand{\tensorLeftId}[5]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 + 14/23*(0,#2) - 1/3*(#2,0) $) -- ($ #1 - 14/23*(0,#2) - 1/3*(#2,0) $);
+	\draw ($ #1 + 14/23*(0,#2) + 1/3*(#2,0) $) -- ($ #1 - 14/23*(0,#2) + 1/3*(#2,0) $);
+	\draw[thick, red] ($ #1 + 1/3*(#2,0) - 1/5*(#2,0) $) -- ($ #1 - 5/6*(#2,0) $);
+	\draw[very thick] #1 ellipse ( {5/6*#2} and {2/3*#2});
+	\filldraw[very thick, unshaded] ($ #1 + 1/3*(#2,0) $) circle (1/5*#2);
+	\node at ($ #1 - (.2,0) - 1/3*(#2,0) + (0,.2) $) {\scriptsize{$#3$}};
+	\node at ($ #1 - (.2,0) + 1/3*(#2,0) - 1/3*(0,#2) $) {\scriptsize{$#4$}};
+	\node at ($ #1 - (.2,0) + 1/3*(#2,0) + 1/3*(0,#2) $) {\scriptsize{$#5$}};
+}
+
+\newcommand{\tensorLeftIdZero}[4]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 + 14/23*(0,#2) + 1/3*(#2,0) $) -- ($ #1 - 14/23*(0,#2) + 1/3*(#2,0) $);
+	\draw[thick, red] ($ #1 + 1/3*(#2,0) - 1/5*(#2,0) $) -- ($ #1 - 5/6*(#2,0) $);
+	\draw[very thick] #1 ellipse ( {5/6*#2} and {2/3*#2});
+	\filldraw[very thick, unshaded] ($ #1 + 1/3*(#2,0) $) circle (1/5*#2);
+	\node at ($ #1 - (.2,0) + 1/3*(#2,0) - 1/3*(0,#2) $) {\scriptsize{$#3$}};
+	\node at ($ #1 - (.2,0) + 1/3*(#2,0) + 1/3*(0,#2) $) {\scriptsize{$#4$}};
+}
+
+\newcommand{\tensorLeftIdZeroZero}[2]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw[thick, red] ($ #1 + 1/3*(#2,0) - 1/5*(#2,0) $) -- ($ #1 - 5/6*(#2,0) $);
+	\draw[very thick] #1 ellipse ( {5/6*#2} and {2/3*#2});
+	\filldraw[very thick, unshaded] ($ #1 + 1/3*(#2,0) $) circle (1/5*#2);
+}
+
+%%%%%%%%%%%%%%%%%%%
+% Evaluations
+%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\tensorLeftIdEv}[4]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 + 14/23*(0,#2) - 1/3*(#2,0) $) -- ($ #1 - 14/23*(0,#2) - 1/3*(#2,0) $);
+	\draw ($ #1 + 1/3*(#2,0) $) -- ($ #1 - 14/23*(0,#2) + 1/3*(#2,0) $);
+	\draw[thick, red] ($ #1 + 1/3*(#2,0) - 1/5*(#2,0) $) -- ($ #1 - 5/6*(#2,0) $);
+%	\draw[thick, red] ($ #1 + 1/3*(#2,0) - 1/5*(#2,0) $) .. controls ++(180:.2cm) and ++(0:.2cm) .. ($ #1 - 1/3*(#2,0) + 2/5*(0,#2) $) .. controls ++(180:.2cm) and ++(0:.2cm) .. ($ #1 - 5/6*(#2,0) $);
+	\draw[very thick] #1 ellipse ( {5/6*#2} and {2/3*#2});
+	\filldraw[very thick, unshaded] ($ #1 + 1/3*(#2,0) $) circle (1/5*#2);
+%	\filldraw[very thick, unshaded] ($ #1 - 1/3*(#2,0) $) circle (1/5*#2);
+%	\node at ($ #1 + (.2,0) - 1/3*(#2,0) - 1/3*(0,#2) $) {\scriptsize{$#3$}};
+	\node at ($ #1 - (.2,0) - 1/3*(#2,0) + (0,.2) $) {\scriptsize{$#3$}};
+	\node at ($ #1 - (.2,0) + 1/3*(#2,0) - 1/3*(0,#2) $) {\scriptsize{$#4$}};
+}
+
+\newcommand{\tensorLeftIdCoev}[4]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 + 14/23*(0,#2) - 1/3*(#2,0) $) -- ($ #1 - 14/23*(0,#2) - 1/3*(#2,0) $);
+	\draw ($ #1 + 14/23*(0,#2) + 1/3*(#2,0) $) -- ($ #1 + 1/3*(#2,0) $);
+	\draw[thick, red] ($ #1 + 1/3*(#2,0) - 1/5*(#2,0) $) -- ($ #1 - 5/6*(#2,0) $);
+%	\draw[thick, red] ($ #1 + 1/3*(#2,0) - 1/5*(#2,0) $) .. controls ++(180:.2cm) and ++(0:.2cm) .. ($ #1 - 1/3*(#2,0) + 2/5*(0,#2) $) .. controls ++(180:.2cm) and ++(0:.2cm) .. ($ #1 - 5/6*(#2,0) $);
+	\draw[very thick] #1 ellipse ( {5/6*#2} and {2/3*#2});
+	\filldraw[very thick, unshaded] ($ #1 + 1/3*(#2,0) $) circle (1/5*#2);
+%	\filldraw[very thick, unshaded] ($ #1 - 1/3*(#2,0) $) circle (1/5*#2);
+%	\node at ($ #1 + (.2,0) - 1/3*(#2,0) - 1/3*(0,#2) $) {\scriptsize{$#3$}};
+	\node at ($ #1 - (.2,0) - 1/3*(#2,0) + (0,.2) $) {\scriptsize{$#3$}};
+	\node at ($ #1 - (.2,0) + 1/3*(#2,0) + 1/3*(0,#2) $) {\scriptsize{$#4$}};
+}
+
+\newcommand{\identityMap}[3]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 + 5/6*(0,#2) $) -- ($ #1 - 5/6*(0,#2) $);
+	\draw[very thick] #1 circle ({5/6*#2});
+	\filldraw[red] ($ #1 - 5/6*(#2,0) $) circle ({1/10*#2});
+	\node at ($ #1 + (.2,0) $) {\scriptsize{$#3$}};
+}
+
+\newcommand{\emptyMap}[2]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw[very thick] #1 circle ({2/3*#2});
+	\filldraw[red] ($ #1 - 2/3*(#2,0) $) circle (.05cm);
+}
+
+\newcommand{\twist}[1]{
+	\fill[unshaded] ($ #1 - (.1,.2) $) rectangle ($ #1 + (.1,.2) $);
+	\draw ($ #1 - (0,.2) $) .. controls ++(135:.1cm) and ++(-135:.2cm) .. #1 .. controls ++(45:.1cm) and ++(-45:.2cm) .. ($ #1 + (0,.2) $);
+}
+
+\newcommand{\twistInverse}[1]{
+	\fill[unshaded] ($ #1 - (.1,.2) $) rectangle ($ #1 + (.1,.2) $);
+	\draw ($ #1 - (0,.2) $) .. controls ++(45:.1cm) and ++(-45:.2cm) .. #1 .. controls ++(135:.1cm) and ++(-135:.2cm) .. ($ #1 + (0,.2) $);
+}
+
+\newcommand{\twistHorizontal}[1]{
+	\fill[unshaded] ($ #1 - (.2,.1) $) rectangle ($ #1 + (.2,.1) $);
+	\draw ($ #1 - (.2,0) $) .. controls ++(45:.1cm) and ++(135:.2cm) .. #1 .. controls ++(-45:.1cm) and ++(-135:.2cm) .. ($ #1 + (.2,0) $);
+}
+
+\newcommand{\twistHorizontalInverse}[1]{
+	\fill[unshaded] ($ #1 - (.2,.1) $) rectangle ($ #1 + (.2,.1) $);
+	\draw ($ #1 - (.2,0) $) .. controls ++(-45:.1cm) and ++(-135:.2cm) .. #1 .. controls ++(45:.1cm) and ++(135:.2cm) .. ($ #1 + (.2,0) $);
+}
+
+\newcommand{\loopIso}[1]{
+	\fill[unshaded] ($ #1 - (.3,.3) $) rectangle ($ #1 + (.1,.3) $);
+	\draw ($ #1 + (-.3,.2) $) arc (90:270:.2cm);
+	\draw ($ #1 + (0,-.3) $)  .. controls ++(90:.2cm) and ++(0:.2cm) .. ($ #1 + (-.3,.2) $);
+	\draw[super thick, white] ($ #1 + (0,.3) $)  .. controls ++(270:.2cm) and ++(0:.2cm) .. ($ #1 + (-.3,-.2) $);
+	\draw ($ #1 + (0,.3) $)  .. controls ++(270:.2cm) and ++(0:.2cm) .. ($ #1 + (-.3,-.2) $);
+}
+
+\newcommand{\loopIsoReverse}[1]{
+	\fill[unshaded] ($ #1 - (.3,.3) $) rectangle ($ #1 + (.1,.3) $);
+	\draw ($ #1 + (-.3,.2) $) arc (90:270:.2cm);
+	\draw ($ #1 + (0,.3) $)  .. controls ++(270:.2cm) and ++(0:.2cm) .. ($ #1 + (-.3,-.2) $);
+	\draw[super thick, white]	 ($ #1 + (0,-.3) $)  .. controls ++(90:.2cm) and ++(0:.2cm) .. ($ #1 + (-.3,.2) $);
+	\draw ($ #1 + (0,-.3) $)  .. controls ++(90:.2cm) and ++(0:.2cm) .. ($ #1 + (-.3,.2) $);
+}
+
+\newcommand{\loopIsoInverse}[1]{
+	\fill[unshaded] ($ #1 - (.1,.3) $) rectangle ($ #1 + (.3,.3) $);
+	\draw ($ #1 + (.3,.2) $) arc (90:-90:.2cm);
+	\draw ($ #1 + (0,-.3) $)  .. controls ++(90:.2cm) and ++(180:.2cm) .. ($ #1 + (.3,.2) $);
+	\draw[super thick, white] ($ #1 + (0,.3) $)  .. controls ++(270:.2cm) and ++(180:.2cm) .. ($ #1 + (.3,-.2) $);
+	\draw ($ #1 + (0,.3) $)  .. controls ++(270:.2cm) and ++(180:.2cm) .. ($ #1 + (.3,-.2) $);
+}
+
+\newcommand{\loopIsoInverseReverse}[1]{
+	\fill[unshaded] ($ #1 - (.1,.3) $) rectangle ($ #1 + (.3,.3) $);
+	\draw ($ #1 + (.3,.2) $) arc (90:-90:.2cm);
+	\draw ($ #1 + (0,.3) $)  .. controls ++(270:.2cm) and ++(180:.2cm) .. ($ #1 + (.3,-.2) $);
+	\draw[super thick, white] ($ #1 + (0,-.3) $)  .. controls ++(90:.2cm) and ++(180:.2cm) .. ($ #1 + (.3,.2) $);
+	\draw ($ #1 + (0,-.3) $)  .. controls ++(90:.2cm) and ++(180:.2cm) .. ($ #1 + (.3,.2) $);
+}
+
+\newcommand{\braiding}[3]{
+	\fill[unshaded] ($ #1 - (.1,#3) $) rectangle ($ #1 + (.1,#3) + (#2,0) $);
+	\draw ($ #1 + (#2,-#3) $) to[out=90, in=-90] ($ #1 + (0,#3) $);
+	\draw[white, line width=4] ($ #1 + (0,-#3) $) to[out=90, in=-90] ($ #1 + (#2,#3) $);
+	\draw ($ #1 + (0,-#3) $) to[out=90, in=-90] ($ #1 + (#2,#3) $);
+}
+
+\newcommand{\braidingInverse}[3]{
+	\fill[unshaded] ($ #1 - (.1,#3) $) rectangle ($ #1 + (.1,#3) + (#2,0) $);
+	\draw ($ #1 + (0,-#3) $) to[out=90, in=-90] ($ #1 + (#2,#3) $);
+	\draw[white, line width=4] ($ #1 + (#2,-#3) $) to[out=90, in=-90] ($ #1 + (0,#3) $);
+	\draw ($ #1 + (#2,-#3) $) to[out=90, in=-90] ($ #1 + (0,#3) $);
+}
+
+\newcommand{\evaluationMap}[3]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 - 2/3*(#2,0) - 1/2*(0,#2) $) .. controls ++(90:{#2}) and ++(90:{#2}) .. ($ #1 + 2/3*(#2,0) - 1/2*(0,#2) $);
+	\draw[very thick] #1 circle ({5/6*#2});
+	\filldraw[red] ($ #1 - 5/6*(#2,0) $) circle ({1/10*#2});
+	\node at ($ #1 - (0,.1) $) {\scriptsize{$#3$}};
+}
+
+\newcommand{\coevaluationMap}[3]{
+	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 - 2/3*(#2,0) + 1/2*(0,#2) $) .. controls ++(270:{#2}) and ++(270:{#2}) .. ($ #1 + 2/3*(#2,0) + 1/2*(0,#2) $);
+	\draw[very thick] #1 circle ({5/6*#2});
+	\filldraw[red] ($ #1 - 5/6*(#2,0) $) circle ({1/10*#2});
+	\node at ($ #1 + (0,.1) $) {\scriptsize{$#3$}};
+}
+
+\newcommand{\identityTangle}[4]{
+\	\draw[rounded corners=5pt, very thick, unshaded] ($ #1 - (#2,#2) $) rectangle ($ #1 + (#2,#2) $);
+	\draw ($ #1 + 5/6*(0,#2) $) -- ($ #1 - 5/6*(0,#2) $);
+	\draw[thick, red] ($ #1 - 1/5*(#2,0) $) -- ($ #1 - 5/6*(#2,0) $);
+	\draw[very thick] #1 circle ({5/6*#2});
+	\draw[very thick, unshaded] #1 circle ({1/5*#2});
+	\node at ($ #1 + (.2,0) - 1/2*(0,#2)$) {\scriptsize{$#3$}};
+	\node at ($ #1 + (.2,0) + 1/2*(0,#2)$) {\scriptsize{$#4$}};
+}
