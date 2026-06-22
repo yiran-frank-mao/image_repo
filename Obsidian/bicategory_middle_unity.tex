@@ -1,0 +1,12 @@
+% https://q.uiver.app/#q=WzAsMyxbMCwwLCIoZzFfVylmIl0sWzIsMCwiZygxX1cgZikiXSxbMSwxLCJnZiJdLFswLDEsIlxcYWxwaGEiXSxbMCwyLCJyX2cgKiAxX2YiLDJdLFsxLDIsIjFfZyAqIGxfZiJdXQ==
+\documentclass[tikz]{standalone}
+\input{preambles}
+\begin{document}
+\begin{tikzcd}[ampersand replacement=\&]
+	{(g1_W)f} \&\& {g(1_W f)} \\
+	\& gf
+	\arrow["\alpha", from=1-1, to=1-3]
+	\arrow["{r_g * 1_f}"', from=1-1, to=2-2]
+	\arrow["{1_g * l_f}", from=1-3, to=2-2]
+\end{tikzcd}
+\end{document}
