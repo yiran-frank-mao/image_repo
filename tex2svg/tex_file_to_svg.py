@@ -3,6 +3,7 @@ import os
 import re
 import subprocess
 import tempfile
+import shutil
 
 
 def parse_github_repo_url(url: str) -> tuple[str, str]:
@@ -89,6 +90,7 @@ def tex_file_to_svg(tex_filepath: str, svg_filepath: str | None = None) -> str:
     Returns:
         The SVG content as a string.
     """
+    pdflatex = shutil.which("pdflatex") or "/usr/local/texlive/2026/bin/x86_64-linux/pdflatex"
     tex_filepath = os.path.abspath(tex_filepath)
     if not os.path.isfile(tex_filepath):
         raise FileNotFoundError(f"TeX file not found: {tex_filepath}")
@@ -104,7 +106,7 @@ def tex_file_to_svg(tex_filepath: str, svg_filepath: str | None = None) -> str:
     with tempfile.TemporaryDirectory() as tempdir:
         process = subprocess.run(
             [
-                "pdflatex",
+                pdflatex,
                 "-interaction=nonstopmode",
                 "-output-directory",
                 tempdir,
