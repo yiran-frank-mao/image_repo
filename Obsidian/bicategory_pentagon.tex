@@ -1,0 +1,16 @@
+% https://q.uiver.app/#q=WzAsNSxbMSwwLCIoa2gpKGdmKSJdLFswLDEsIigoa2gpZylmIl0sWzIsMSwiayhoKGdmKSkiXSxbMCwzLCIoayhoZykpZiJdLFsyLDMsImsoKGhnKWYpIl0sWzAsMSwiYV97a2gsZyxmfSIsMl0sWzAsMiwiYV97ayxoLGdmfSJdLFsxLDMsImFfe2ssaCxnfSoxX2YiLDJdLFsyLDQsIjFfayphX3toLGcsZn0iXSxbMyw0LCJhX3trLGhnLGZ9IiwyXV0=
+\documentclass[tikz]{standalone}
+\usepackage{quiver}
+\begin{document}
+\begin{tikzcd}[ampersand replacement=\&]
+	\& {(kh)(gf)} \& \\
+	{((kh)g)f} \&\& {k(h(gf))} \\
+	\\
+	{(k(hg))f} \&\& {k((hg)f)}
+	\arrow["{a_{kh,g,f}}"', from=1-2, to=2-1]
+	\arrow["{a_{k,h,gf}}", from=1-2, to=2-3]
+	\arrow["{a_{k,h,g}*1_f}"', from=2-1, to=4-1]
+	\arrow["{1_k*a_{h,g,f}}", from=2-3, to=4-3]
+	\arrow["{a_{k,hg,f}}"', from=4-1, to=4-3]
+\end{tikzcd}
+\end{document}
