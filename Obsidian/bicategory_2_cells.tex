@@ -1,0 +1,11 @@
+% https://q.uiver.app/#q=WzAsMixbMCwwLCJYIl0sWzIsMCwiWSJdLFswLDEsImYiLDAseyJjdXJ2ZSI6LTJ9XSxbMCwxLCJmJyIsMix7ImN1cnZlIjoyfV0sWzIsMywiXFxhbHBoYSIsMCx7InNob3J0ZW4iOnsic291cmNlIjoyMCwidGFyZ2V0IjoyMH19XV0=
+\documentclass[tikz]{standalone}
+\usepackage{quiver}
+\begin{document}
+\begin{tikzcd}[ampersand replacement=\&]
+	X \&\& Y
+	\arrow[""{name=0, anchor=center, inner sep=0}, "f", curve={height=-12pt}, from=1-1, to=1-3]
+	\arrow[""{name=1, anchor=center, inner sep=0}, "{f'}"', curve={height=12pt}, from=1-1, to=1-3]
+	\arrow["\alpha", between={0.2}{0.8}, Rightarrow, from=0, to=1]
+\end{tikzcd}
+\end{document}
