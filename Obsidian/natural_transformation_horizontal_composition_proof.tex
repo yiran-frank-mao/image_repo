@@ -1,0 +1,23 @@
+% https://q.uiver.app/#q=WzAsOCxbMCwwLCJIRyhYKSIsWzI0MCw2MCw2MCwxXV0sWzIsMCwiSEYoWCkiLFsyNDAsNjAsNjAsMV1dLFswLDIsIkhHKFkpIixbMjQwLDYwLDYwLDFdXSxbMiwyLCJIRihZKSIsWzI0MCw2MCw2MCwxXV0sWzEsMSwiS0coWCkiLFswLDYwLDYwLDFdXSxbMywxLCJLRihYKSIsWzAsNjAsNjAsMV1dLFsxLDMsIktHKFkpIixbMCw2MCw2MCwxXV0sWzMsMywiS0YoWSkiLFswLDYwLDYwLDFdXSxbMSwwLCJIKFxcYWxwaGFfWCkiLDIseyJjb2xvdXIiOlsyNDAsNjAsNjBdfSxbMjQwLDYwLDYwLDFdXSxbMSwzLCJIRihmKSIsMix7ImxhYmVsX3Bvc2l0aW9uIjozMCwiY29sb3VyIjpbMjQwLDYwLDYwXX0sWzI0MCw2MCw2MCwxXV0sWzAsMiwiSEcoZikiLDIseyJjb2xvdXIiOlsyNDAsNjAsNjBdfSxbMjQwLDYwLDYwLDFdXSxbMywyLCJIKFxcYWxwaGFfWSkiLDAseyJsYWJlbF9wb3NpdGlvbiI6MzAsImNvbG91ciI6WzI0MCw2MCw2MF19LFsyNDAsNjAsNjAsMV1dLFs0LDYsIktHKGYpIiwyLHsibGFiZWxfcG9zaXRpb24iOjMwLCJjb2xvdXIiOlswLDYwLDYwXX0sWzAsNjAsNjAsMV1dLFs1LDQsIksoXFxhbHBoYV9YKSIsMix7ImxhYmVsX3Bvc2l0aW9uIjozMCwiY29sb3VyIjpbMCw2MCw2MF19LFswLDYwLDYwLDFdXSxbNyw2LCJLKFxcYWxwaGFfWSkiLDAseyJjb2xvdXIiOlswLDYwLDYwXX0sWzAsNjAsNjAsMV1dLFs1LDcsIktGKGYpIiwyLHsibGFiZWxfcG9zaXRpb24iOjMwLCJjb2xvdXIiOlswLDYwLDYwXX0sWzAsNjAsNjAsMV1dLFszLDcsIlxcYmV0YV97RihZKX0iXSxbMiw2LCJcXGJldGFfe0coWSl9IiwyXSxbMCw0LCJcXGJldGFfe0coWCl9IiwyXSxbMSw1LCJcXGJldGFfe0YoWCl9Il1d
+\documentclass[tikz]{standalone}
+\usepackage{quiver}
+\begin{document}
+\begin{tikzcd}[ampersand replacement=\&]
+	\textcolor{rgb,255:red,92;green,92;blue,214}{{HG(X)}} \&\& \textcolor{rgb,255:red,92;green,92;blue,214}{{HF(X)}} \& \\
+	\& \textcolor{rgb,255:red,214;green,92;blue,92}{{KG(X)}} \&\& \textcolor{rgb,255:red,214;green,92;blue,92}{{KF(X)}} \\
+	\textcolor{rgb,255:red,92;green,92;blue,214}{{HG(Y)}} \&\& \textcolor{rgb,255:red,92;green,92;blue,214}{{HF(Y)}} \\
+	\& \textcolor{rgb,255:red,214;green,92;blue,92}{{KG(Y)}} \&\& \textcolor{rgb,255:red,214;green,92;blue,92}{{KF(Y)}}
+	\arrow["{\beta_{G(X)}}"', from=1-1, to=2-2]
+	\arrow["{HG(f)}"', color={rgb,255:red,92;green,92;blue,214}, from=1-1, to=3-1]
+	\arrow["{H(\alpha_X)}"', color={rgb,255:red,92;green,92;blue,214}, from=1-3, to=1-1]
+	\arrow["{\beta_{F(X)}}", from=1-3, to=2-4]
+	\arrow["{HF(f)}"'{pos=0.3}, color={rgb,255:red,92;green,92;blue,214}, from=1-3, to=3-3]
+	\arrow["{KG(f)}"'{pos=0.3}, color={rgb,255:red,214;green,92;blue,92}, from=2-2, to=4-2]
+	\arrow["{K(\alpha_X)}"'{pos=0.3}, color={rgb,255:red,214;green,92;blue,92}, from=2-4, to=2-2]
+	\arrow["{KF(f)}"'{pos=0.3}, color={rgb,255:red,214;green,92;blue,92}, from=2-4, to=4-4]
+	\arrow["{\beta_{G(Y)}}"', from=3-1, to=4-2]
+	\arrow["{H(\alpha_Y)}"{pos=0.3}, color={rgb,255:red,92;green,92;blue,214}, from=3-3, to=3-1]
+	\arrow["{\beta_{F(Y)}}", from=3-3, to=4-4]
+	\arrow["{K(\alpha_Y)}", color={rgb,255:red,214;green,92;blue,92}, from=4-4, to=4-2]
+\end{tikzcd}
+\end{document}
