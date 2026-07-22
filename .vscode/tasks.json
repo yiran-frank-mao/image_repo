@@ -1,0 +1,25 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "python3 \"${workspaceFolder}/tex2svg/tex_file_to_svg.py\" \"${file}\" --github-repo \"$(git -C '${workspaceFolder}' remote get-url origin | sed 's/\\.git$//')\"",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "focus": false
+            },
+            "problemMatcher": []
+        }
+    ]
+}
