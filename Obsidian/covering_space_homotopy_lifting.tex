@@ -1,0 +1,18 @@
+% https://q.uiver.app/#q=WzAsNCxbMCwyLCJZIl0sWzQsMCwiWVxcdGltZXMgSSJdLFsyLDIsIlxcdGlsZGV7WH0iXSxbMiw0LCJYIl0sWzAsMSwiKFxcaWQsMCkiLDAseyJzdHlsZSI6eyJ0YWlsIjp7Im5hbWUiOiJob29rIiwic2lkZSI6InRvcCJ9fX1dLFswLDIsIlxcdGlsZGV7Zn1fMCIsMl0sWzIsMywicCIsMl0sWzEsMywiRiJdLFsxLDIsIiFcXHRpbGRle0Z9IiwwLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV0sWzAsMywiZl8wIiwyXV0=
+\documentclass[tikz]{standalone}
+\input{preambles.tex}
+\begin{document}
+\begin{tikzcd}
+	&&&& {Y\times I} \\
+	\\
+	Y && {\tilde{X}} \\
+	\\
+	&& X
+	\arrow["{!\tilde{F}}", dashed, from=1-5, to=3-3]
+	\arrow["F", from=1-5, to=5-3]
+	\arrow["{(\id,0)}", hook, from=3-1, to=1-5]
+	\arrow["{\tilde{f}_0}"', from=3-1, to=3-3]
+	\arrow["{f_0}"', from=3-1, to=5-3]
+	\arrow["p"', from=3-3, to=5-3]
+\end{tikzcd}
+\end{document}
