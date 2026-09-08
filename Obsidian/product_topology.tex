@@ -1,0 +1,13 @@
+% https://q.uiver.app/#q=WzAsMyxbMCwwLCJaIl0sWzAsMiwiXFxwcm9kX3tpXFxpbiBJfSBYX2kiXSxbMiwyLCJYX2oiXSxbMCwxLCIhZiIsMix7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dLFsxLDIsIlxccGlfaiJdLFswLDIsImZfaiJdXQ==
+\documentclass[tikz]{standalone}
+\input{preambles.tex}
+\begin{document}
+\begin{tikzcd}
+	Z && \\
+	\\
+	{\prod_{i\in I} X_i} && {X_j}
+	\arrow["{!f}"', dashed, from=1-1, to=3-1]
+	\arrow["{f_j}", from=1-1, to=3-3]
+	\arrow["{\pi_j}", from=3-1, to=3-3]
+\end{tikzcd}
+\end{document}
