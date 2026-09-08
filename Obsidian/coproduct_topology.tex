@@ -1,0 +1,13 @@
+% https://q.uiver.app/#q=WzAsMyxbMCwyLCJcXGJpZ3NxY3VwX3tpXFxpbiBJfVhfe2l9Il0sWzIsMiwiWF9pIl0sWzAsMCwiWiJdLFsxLDAsIlxcaW90YV9pIl0sWzEsMiwiZl9pIiwyXSxbMCwyLCIhZiIsMCx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dXQ==
+\documentclass[tikz]{standalone}
+\input{preambles.tex}
+\begin{document}
+\begin{tikzcd}
+	Z && \\
+	\\
+	{\bigsqcup_{i\in I}X_{i}} && {X_i}
+	\arrow["{!f}", dashed, from=3-1, to=1-1]
+	\arrow["{f_i}"', from=3-3, to=1-1]
+	\arrow["{\iota_i}", from=3-3, to=3-1]
+\end{tikzcd}
+\end{document}
