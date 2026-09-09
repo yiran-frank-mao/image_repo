@@ -1,0 +1,24 @@
+\documentclass[tikz]{standalone}
+\input{preambles}
+
+\begin{document}
+\begin{tikzpicture}[scale=1.2]
+
+    % Axes
+    \draw[->, thick] (-0.6,0) -- (6.1,0)
+        node[right] {$\mathbb{R}$};
+    \draw[->, thick] (0,-0.6) -- (0,5.9)
+        node[above] {$\mathbb{R}$};
+
+    % Pink horizontal rectangle
+    \fill[pink!70, opacity=0.4] (1.0,1.0) rectangle (4.0,3.0);
+    \draw[red, very thick, dashed]
+        (1.0,1.0) rectangle (4.0,3.0);
+
+    % Blue vertical rectangle
+    \fill[cyan!45, opacity=0.4] (3.0,2.0) rectangle (5.0,5.9);
+    \draw[blue, very thick, dashed]
+        (3.0,2.0) rectangle (5.0,5.9);
+
+\end{tikzpicture}
+\end{document}
