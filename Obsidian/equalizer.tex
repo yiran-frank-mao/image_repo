@@ -1,0 +1,15 @@
+% https://q.uiver.app/#q=WzAsNCxbMiwxLCJBIl0sWzQsMSwiQiJdLFswLDAsIkUiXSxbMCwyLCJaIl0sWzAsMSwiZiIsMCx7ImN1cnZlIjotMn1dLFswLDEsImciLDIseyJjdXJ2ZSI6Mn1dLFsyLDAsImUiXSxbMywwLCJ6IiwyXSxbMywyLCIhdSIsMCx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dXQ==
+\documentclass[tikz]{standalone}
+\input{preambles}
+\begin{document}
+\begin{tikzcd}
+	E &&&& \\
+	&& A && B \\
+	Z
+	\arrow["e", from=1-1, to=2-3]
+	\arrow["f", curve={height=-12pt}, from=2-3, to=2-5]
+	\arrow["g"', curve={height=12pt}, from=2-3, to=2-5]
+	\arrow["{!u}", dashed, from=3-1, to=1-1]
+	\arrow["z"', from=3-1, to=2-3]
+\end{tikzcd}
+\end{document}
