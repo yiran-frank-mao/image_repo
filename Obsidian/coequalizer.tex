@@ -1,0 +1,15 @@
+% https://q.uiver.app/#q=WzAsNCxbMCwxLCJBIl0sWzIsMSwiQiJdLFs0LDIsIlEiXSxbNCwwLCJaIl0sWzAsMSwiZiIsMCx7ImN1cnZlIjotMn1dLFswLDEsImciLDIseyJjdXJ2ZSI6Mn1dLFsxLDIsInEiXSxbMSwzLCJ6Il0sWzIsMywiIXUiLDIseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XV0=
+\documentclass[tikz]{standalone}
+\input{preambles}
+\begin{document}
+\begin{tikzcd}
+	&&&& Z \\
+	A && B \\
+	&&&& Q
+	\arrow["f", curve={height=-12pt}, from=2-1, to=2-3]
+	\arrow["g"', curve={height=12pt}, from=2-1, to=2-3]
+	\arrow["z", from=2-3, to=1-5]
+	\arrow["q", from=2-3, to=3-5]
+	\arrow["{!u}"', dashed, from=3-5, to=1-5]
+\end{tikzcd}
+\end{document}
