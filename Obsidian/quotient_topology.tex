@@ -1,0 +1,13 @@
+% https://q.uiver.app/#q=WzAsMyxbMCwwLCJYIl0sWzAsMiwiWSJdLFsyLDIsIloiXSxbMCwxLCJxIiwyLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoiZXBpIn19fV0sWzEsMiwiZiIsMl0sWzAsMiwiZlxcY2lyYyBxIl1d
+\documentclass[tikz]{standalone}
+\input{preambles}
+\begin{document}
+\begin{tikzcd}
+	X && \\
+	\\
+	Y && Z
+	\arrow["q"', two heads, from=1-1, to=3-1]
+	\arrow["{f\circ q}", from=1-1, to=3-3]
+	\arrow["f"', from=3-1, to=3-3]
+\end{tikzcd}
+\end{document}
