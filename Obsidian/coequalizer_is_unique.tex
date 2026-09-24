@@ -1,0 +1,16 @@
+% https://q.uiver.app/#q=WzAsNCxbMCwxLCJBIl0sWzIsMSwiQiJdLFs1LDIsIlEiXSxbNSwwLCJQIl0sWzAsMSwiZiIsMCx7ImN1cnZlIjotMX1dLFswLDEsImciLDIseyJjdXJ2ZSI6MX1dLFsxLDIsInEiLDAseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJlcGkifX19XSxbMSwzLCJwIiwwLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoiZXBpIn19fV0sWzIsMywiIXVfcSIsMix7ImN1cnZlIjotMiwic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV0sWzMsMiwiIXVfcCIsMCx7ImN1cnZlIjotMiwic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV1d
+\documentclass[tikz]{standalone}
+\input{preambles}
+\begin{document}
+\begin{tikzcd}
+	&&&&& P \\
+	A && B \\
+	&&&&& Q
+	\arrow["{!u_p}", curve={height=-12pt}, dashed, from=1-6, to=3-6]
+	\arrow["f", curve={height=-6pt}, from=2-1, to=2-3]
+	\arrow["g"', curve={height=6pt}, from=2-1, to=2-3]
+	\arrow["p", two heads, from=2-3, to=1-6]
+	\arrow["q", two heads, from=2-3, to=3-6]
+	\arrow["{!u_q}"', curve={height=-12pt}, dashed, from=3-6, to=1-6]
+\end{tikzcd}
+\end{document}
