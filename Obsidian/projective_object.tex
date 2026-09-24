@@ -1,0 +1,13 @@
+% https://q.uiver.app/#q=WzAsMyxbMiwyLCJFIl0sWzAsMiwiWCJdLFswLDAsIlAiXSxbMCwxLCJlIiwwLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoiZXBpIn19fV0sWzIsMSwiZiIsMl0sWzIsMCwiXFxiYXJ7Zn0iLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XV0=
+\documentclass[tikz]{standalone}
+\input{preambles}
+\begin{document}
+\begin{tikzcd}
+	P && \\
+	\\
+	X && E
+	\arrow["f"', from=1-1, to=3-1]
+	\arrow["{\bar{f}}", dashed, from=1-1, to=3-3]
+	\arrow["e", two heads, from=3-3, to=3-1]
+\end{tikzcd}
+\end{document}
