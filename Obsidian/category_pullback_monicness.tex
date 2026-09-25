@@ -1,0 +1,19 @@
+% https://q.uiver.app/#q=WzAsNSxbMSwzLCJBIl0sWzMsMywiWCJdLFszLDEsIkIiXSxbMSwxLCJQIl0sWzAsMCwiWiJdLFswLDEsImYiLDJdLFsyLDEsImciLDAseyJzdHlsZSI6eyJ0YWlsIjp7Im5hbWUiOiJtb25vIn19fV0sWzMsMiwicF8yIl0sWzMsMCwicF8xIiwyXSxbNCwwLCJ5XFxjaXJjIHBfMT15J1xcY2lyYyBwXzEiLDIseyJjdXJ2ZSI6M31dLFs0LDMsInkiLDAseyJjdXJ2ZSI6LTF9XSxbNCwzLCJ5JyIsMix7ImN1cnZlIjoxfV0sWzQsMiwieVxcY2lyYyBwXzI9eSdcXGNpcmMgcF8yIiwwLHsiY3VydmUiOi0zfV1d
+\documentclass[tikz]{standalone}
+\input{preambles}
+\begin{document}
+\begin{tikzcd}
+	Z &&& \\
+	& P && B \\
+	\\
+	& A && X
+	\arrow["y", curve={height=-6pt}, from=1-1, to=2-2]
+	\arrow["{y'}"', curve={height=6pt}, from=1-1, to=2-2]
+	\arrow["{y\circ p_2=y'\circ p_2}", curve={height=-18pt}, from=1-1, to=2-4]
+	\arrow["{y\circ p_1=y'\circ p_1}"', curve={height=18pt}, from=1-1, to=4-2]
+	\arrow["{p_2}", from=2-2, to=2-4]
+	\arrow["{p_1}"', from=2-2, to=4-2]
+	\arrow["g", tail, from=2-4, to=4-4]
+	\arrow["f"', from=4-2, to=4-4]
+\end{tikzcd}
+\end{document}
