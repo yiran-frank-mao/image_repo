@@ -1,0 +1,12 @@
+% https://q.uiver.app/#q=WzAsMyxbMCwxLCIoWCx4LCB5KSJdLFsyLDEsIihmKFgpLGYoeCksZih5KSkiXSxbMCwwLCIoWzAsMV0sMCwxKSJdLFswLDEsImYiXSxbMiwwLCJcXGdhbW1hIiwyXSxbMiwxLCIiLDIseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XV0=
+\documentclass[tikz]{standalone}
+\input{preambles}
+\begin{document}
+\begin{tikzcd}
+	{([0,1],0,1)} && \\
+	{(X,x, y)} && {(f(X),f(x),f(y))}
+	\arrow["\gamma"', from=1-1, to=2-1]
+	\arrow[dashed, from=1-1, to=2-3]
+	\arrow["f", from=2-1, to=2-3]
+\end{tikzcd}
+\end{document}
