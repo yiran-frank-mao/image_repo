@@ -1,0 +1,16 @@
+% https://q.uiver.app/#q=WzAsNSxbMCwxLCJHIl0sWzIsMSwiMSJdLFs0LDEsIkciXSxbMiwwLCJHXFx0aW1lcyBHIl0sWzIsMiwiR1xcdGltZXMgRyJdLFswLDFdLFsxLDIsInUiXSxbMCwzLCIoXFxpZCwgaSkiLDAseyJjdXJ2ZSI6LTF9XSxbMCw0LCIoaSwgXFxpZCkiLDIseyJjdXJ2ZSI6MX1dLFszLDIsIm0iLDAseyJjdXJ2ZSI6LTF9XSxbNCwyLCJtIiwyLHsiY3VydmUiOjF9XV0=
+\documentclass[tikz]{standalone}
+\input{preambles}
+\begin{document}
+\begin{tikzcd}
+	&& {G\times G} && \\
+	G && 1 && G \\
+	&& {G\times G}
+	\arrow["m", curve={height=-6pt}, from=1-3, to=2-5]
+	\arrow["{(\id, i)}", curve={height=-6pt}, from=2-1, to=1-3]
+	\arrow[from=2-1, to=2-3]
+	\arrow["{(i, \id)}"', curve={height=6pt}, from=2-1, to=3-3]
+	\arrow["u", from=2-3, to=2-5]
+	\arrow["m"', curve={height=6pt}, from=3-3, to=2-5]
+\end{tikzcd}
+\end{document}

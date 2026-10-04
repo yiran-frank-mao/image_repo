@@ -1,0 +1,15 @@
+% https://q.uiver.app/#q=WzAsNCxbMiwyLCJHXFx0aW1lcyBHIl0sWzQsMiwiMVxcdGltZXMgRyJdLFsyLDAsIkciXSxbMCwyLCJHXFx0aW1lcyAxIl0sWzEsMCwidVxcdGltZXMgXFxpZCJdLFswLDIsIm0iXSxbMywwLCJcXGlkIFxcdGltZXMgdSIsMl0sWzEsMiwicF8yIiwyXSxbMywyLCJwXzEiXV0=
+\documentclass[tikz]{standalone}
+\input{preambles}
+\begin{document}
+\begin{tikzcd}
+	&& G && \\
+	\\
+	{G\times 1} && {G\times G} && {1\times G}
+	\arrow["{p_1}", from=3-1, to=1-3]
+	\arrow["{\id \times u}"', from=3-1, to=3-3]
+	\arrow["m", from=3-3, to=1-3]
+	\arrow["{p_2}"', from=3-5, to=1-3]
+	\arrow["{u\times \id}", from=3-5, to=3-3]
+\end{tikzcd}
+\end{document}
