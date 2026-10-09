@@ -3,11 +3,11 @@
 \input{preambles.tex}
 \begin{document}
 \begin{tikzcd}
-	Z && \\
+	{\prod_{i\in I} X_i} && \\
 	\\
-	{\prod_{i\in I} X_i} && {X_j}
-	\arrow["{!f}"', dashed, from=1-1, to=3-1]
-	\arrow["{f_j}", from=1-1, to=3-3]
-	\arrow["{\pi_j}", from=3-1, to=3-3]
+	{X_j} && Z
+	\arrow["{\pi_j}", from=1-1, to=3-1]
+	\arrow["{!f}"', dashed, from=3-3, to=1-1]
+	\arrow["{f_j}", from=3-3, to=3-1]
 \end{tikzcd}
 \end{document}
