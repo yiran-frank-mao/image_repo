@@ -1,0 +1,16 @@
+% https://q.uiver.app/#q=WzAsNSxbMywwLCJYIl0sWzIsMiwiRF97an0iXSxbNCwyLCJEX3trfSJdLFswLDIsIkRfe2l9Il0sWzYsMiwiXFxjZG90cyJdLFsxLDAsIlxcbGFtYmRhX3tEX3tqfX0iLDAseyJsYWJlbF9wb3NpdGlvbiI6NDB9XSxbMiwwLCJcXGxhbWJkYV97RF97a319Il0sWzMsMCwiXFxsYW1iZGFfe0Rfe2l9fSIsMCx7ImxhYmVsX3Bvc2l0aW9uIjo0MH1dLFs0LDBdLFsxLDIsIkQoZl97a2p9KSIsMl0sWzMsMSwiRChmX3tqaX0pIiwyXV0=
+\documentclass[tikz]{standalone}
+\usepackage{quiver}
+\begin{document}
+\begin{tikzcd}
+	&&& X &&& \\
+	\\
+	{D_{i}} && {D_{j}} && {D_{k}} && \cdots
+	\arrow["{\lambda_{D_{i}}}"{pos=0.4}, from=3-1, to=1-4]
+	\arrow["{D(f_{ji})}"', from=3-1, to=3-3]
+	\arrow["{\lambda_{D_{j}}}"{pos=0.4}, from=3-3, to=1-4]
+	\arrow["{D(f_{kj})}"', from=3-3, to=3-5]
+	\arrow["{\lambda_{D_{k}}}", from=3-5, to=1-4]
+	\arrow[from=3-7, to=1-4]
+\end{tikzcd}
+\end{document}
