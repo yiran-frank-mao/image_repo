@@ -1,0 +1,33 @@
+% https://q.uiver.app/#q=WzAsMTAsWzAsMiwiQV8xIl0sWzAsMCwiQl8xIl0sWzAsNCwiRV8xIl0sWzQsNCwiRV8yIl0sWzQsMiwiQV8yIl0sWzIsNCwiRV8xXFx0aW1lcyBFXzIiXSxbMiwyLCJBXzFcXHRpbWVzIEFfMiJdLFs0LDAsIkJfMiJdLFsyLDAsIkJfMVxcdGltZXMgQl8yIl0sWzEsMywiWiIsWzAsNjAsNjAsMV1dLFswLDEsImZfMSIsMCx7ImN1cnZlIjotMX1dLFsyLDAsImVfMSJdLFswLDEsImdfMSIsMix7ImN1cnZlIjoxfV0sWzMsNCwiZV8yIl0sWzUsMl0sWzUsM10sWzYsMF0sWzYsNF0sWzQsNywiZl8yIiwwLHsiY3VydmUiOi0xfV0sWzQsNywiZ18yIiwyLHsiY3VydmUiOjF9XSxbOCwxXSxbOCw3XSxbNiw4LCJnXzFcXHRpbWVzIGdfMiIsMix7ImN1cnZlIjoxfV0sWzYsOCwiZl8xXFx0aW1lcyBmXzIiLDAseyJvZmZzZXQiOi0zLCJjdXJ2ZSI6LTF9XSxbNSw2LCJlXzFcXHRpbWVzIGVfMiIsMl0sWzksNiwieiIsMCx7ImNvbG91ciI6WzAsNjAsNjBdfSxbMCw2MCw2MCwxXV0sWzksMCwiIiwyLHsiY29sb3VyIjpbMCw2MCw2MF19XSxbOSw0LCIiLDIseyJjb2xvdXIiOlswLDYwLDYwXX1dLFs5LDIsIiIsMix7ImNvbG91ciI6WzAsNjAsNjBdLCJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XSxbOSwzLCIiLDAseyJjb2xvdXIiOlswLDYwLDYwXSwic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV0sWzksNSwiISIsMix7ImNvbG91ciI6WzAsNjAsNjBdLCJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19LFswLDYwLDYwLDFdXV0=
+\documentclass[tikz]{standalone}
+\input{preambles}
+\begin{document}
+\begin{tikzcd}
+	{B_1} && {B_1\times B_2} && {B_2} \\
+	\\
+	{A_1} && {A_1\times A_2} && {A_2} \\
+	& \textcolor{rgb,255:red,214;green,92;blue,92}{Z} \\
+	{E_1} && {E_1\times E_2} && {E_2}
+	\arrow[from=1-3, to=1-1]
+	\arrow[from=1-3, to=1-5]
+	\arrow["{f_1}", curve={height=-6pt}, from=3-1, to=1-1]
+	\arrow["{g_1}"', curve={height=6pt}, from=3-1, to=1-1]
+	\arrow["{g_1\times g_2}"', curve={height=6pt}, from=3-3, to=1-3]
+	\arrow["{f_1\times f_2}", shift left=3, curve={height=-6pt}, from=3-3, to=1-3]
+	\arrow[from=3-3, to=3-1]
+	\arrow[from=3-3, to=3-5]
+	\arrow["{f_2}", curve={height=-6pt}, from=3-5, to=1-5]
+	\arrow["{g_2}"', curve={height=6pt}, from=3-5, to=1-5]
+	\arrow[color={rgb,255:red,214;green,92;blue,92}, from=4-2, to=3-1]
+	\arrow["z", color={rgb,255:red,214;green,92;blue,92}, from=4-2, to=3-3]
+	\arrow[color={rgb,255:red,214;green,92;blue,92}, from=4-2, to=3-5]
+	\arrow[color={rgb,255:red,214;green,92;blue,92}, dashed, from=4-2, to=5-1]
+	\arrow["{!}"', color={rgb,255:red,214;green,92;blue,92}, dashed, from=4-2, to=5-3]
+	\arrow[color={rgb,255:red,214;green,92;blue,92}, dashed, from=4-2, to=5-5]
+	\arrow["{e_1}", from=5-1, to=3-1]
+	\arrow["{e_1\times e_2}"', from=5-3, to=3-3]
+	\arrow[from=5-3, to=5-1]
+	\arrow[from=5-3, to=5-5]
+	\arrow["{e_2}", from=5-5, to=3-5]
+\end{tikzcd}
+\end{document}
