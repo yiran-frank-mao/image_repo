@@ -1,0 +1,19 @@
+% https://q.uiver.app/#q=WzAsOCxbMCwxLCJBIl0sWzIsMSwiQiJdLFs0LDEsIkMiXSxbMiwwLCIwIl0sWzUsMSwiRCJdLFs3LDEsIkEiXSxbOSwxLCJCIl0sWzcsMCwiMCJdLFswLDEsImYiXSxbMSwyLCIwX3tCLEN9Il0sWzEsM10sWzMsMl0sWzAsM10sWzQsNSwiMF97RCxBfSJdLFs1LDYsImYiXSxbNCw3XSxbNyw2XSxbNyw1XV0=
+\documentclass[tikz]{standalone}
+\input{preambles}
+\begin{document}
+\begin{tikzcd}
+	&& 0 &&&&& 0 && \\
+	A && B && C & D && A && B
+	\arrow[from=1-3, to=2-5]
+	\arrow[from=1-8, to=2-8]
+	\arrow[from=1-8, to=2-10]
+	\arrow[from=2-1, to=1-3]
+	\arrow["f", from=2-1, to=2-3]
+	\arrow[from=2-3, to=1-3]
+	\arrow["{0_{B,C}}", from=2-3, to=2-5]
+	\arrow[from=2-6, to=1-8]
+	\arrow["{0_{D,A}}", from=2-6, to=2-8]
+	\arrow["f", from=2-8, to=2-10]
+\end{tikzcd}
+\end{document}
